@@ -40,7 +40,7 @@ const sampleProjects = [
         description:
             "Full Stack Developer",
         image: myPhoto,
-        links: { live: "https://linkedin.com/in/aasthajoshi23", code: "https://github.com/JoshiAastha04/PortfolioFlix" },
+        links: { live: "https://linkedin.com/in/aasthajoshi23", code: "https://github.com/JoshiAastha04/Portfolio-Flix" },
         featured: true,
     },
     {
