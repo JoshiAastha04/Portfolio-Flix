@@ -1,101 +1,112 @@
-// src/App.jsx
-import React, { useEffect, useRef, useState } from "react";
-import PortfolioNetflixUI from "./components/PortfolioFlixUI.jsx";
+import React, { useState, useEffect, useRef } from "react";
+import PortfolioFlixUI from "./components/PortfolioFlixUI";
 import tadum from "./assets/tadumAudiio.m4a";
 
-
-function NetflixIntro() {
-    const [visibleIndex, setVisibleIndex] = useState(-1);
-    const audioRef = useRef(null);
-
-    const letters = ["A", "A", "S", "T", "H", "A"];
-
-    // set up audio once on mount
-    useEffect(() => {
-        const audio = new Audio(tadum);
-        audio.volume = 1.0;
-        audio.muted = true; // allow autoplay on mobile/desktop
-        audio.playsInline = true;
-
-        audioRef.current = audio;
-
-
-        audio
-            .play()
-            .catch(() => {
-                // play on tap
-            });
-
-        return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current = null;
-            }
-        };
-    }, []);
-
-    // reveal letters one by one
-    useEffect(() => {
-        const timeouts = letters.map((_, i) =>
-            setTimeout(() => setVisibleIndex(i), i * 300)
-        );
-
-        return () => {
-            timeouts.forEach((t) => clearTimeout(t));
-        };
-
-    }, []);
-
-    const handleIntroClick = () => {
-        const audio = audioRef.current;
-        if (!audio) return;
-
-        audio.muted = false; // unmute
-        audio.currentTime = 0; // restart
-        audio.play().catch(console.error);
-    };
-
-    return (
-        <div
-            onClick={handleIntroClick}
-            className="flex flex-col items-center justify-center min-h-screen w-full bg-black text-[#e50914] px-4"
-            style={{
-                paddingTop: "env(safe-area-inset-top)",
-                paddingBottom: "env(safe-area-inset-bottom)",
-            }}
-        >
-            {/* Netflix-style letters */}
-            <div className="flex space-x-1 xs:space-x-2 text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-[0.15em] sm:tracking-[0.3em]">
-                {letters.map((letter, i) => (
-                    <span
-                        key={i}
-                        className={`transition-opacity duration-500 ${
-                            i <= visibleIndex ? "opacity-100" : "opacity-0"
-                        }`}
-                    >
-            {letter}
-          </span>
-                ))}
-            </div>
-
-            {/* helper text */}
-            <p className="mt-4 text-[11px] sm:text-sm text-neutral-400 text-center">
-                Tap to enable sound 🔊
-            </p>
-        </div>
-    );
-}
+// =======================
+// MAIN APP
+// =======================
 
 export default function App() {
     const [showIntro, setShowIntro] = useState(true);
 
+    return showIntro ? (
+        <Intro onFinish={() => setShowIntro(false)} />
+    ) : (
+        <PortfolioFlixUI />
+    );
+}
+
+// =======================
+// NETFLIX-STYLE INTRO
+// =======================
+
+function Intro({ onFinish }) {
+    const [step, setStep] = useState(0);
+    const audioRef = useRef(null);
+
+    const letters = ["A", "A", "S", "T", "H", "A"];
+
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowIntro(false);
-        }, 3500); // long enough for letters + sound
+        const audio = new Audio(tadum);
+        audio.volume = 1.0;
+        audio.muted = true;
+        audio.playsInline = true;
+        audioRef.current = audio;
 
-        return () => clearTimeout(timer);
-    }, []);
+        audio.play().catch(() => {});
 
-    return showIntro ? <NetflixIntro /> : <PortfolioNetflixUI />;
+        // animation timeline
+        const timers = [
+            setTimeout(() => setStep(1), 500),   // show first A
+            setTimeout(() => setStep(2), 1400),  // slide first A left
+            setTimeout(() => setStep(3), 1500),  // reveal rest
+            setTimeout(() => setStep(4), 3000),  // hold / pulse
+            setTimeout(() => onFinish(), 3800),  // go to main UI
+        ];
+
+        return () => timers.forEach(clearTimeout);
+    }, [onFinish]);
+
+    const enableSound = () => {
+        const audio = audioRef.current;
+        if (!audio) return;
+
+        audio.muted = false;
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    };
+
+    return (
+        <div
+            onClick={enableSound}
+            className="flex items-center justify-center min-h-screen text-white font-extrabold tracking"
+            style={{
+                background: "radial-gradient(circle at center, #e50914 0%, #000 70%)",
+                userSelect: "none",
+            }}
+        >
+            <div className="flex items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+
+                {letters.map((letter, i) => {
+                    let base = "inline-block transition-all duration-500";
+
+                    if (i === 0) {
+                        // FIRST A
+                        if (step < 1) {
+                            base += " opacity-0";          // hidden
+                        } else {
+                            base += " opacity-100";        // visible after step 1
+                        }
+
+                        if (step === 2) {
+                            // slide only DURING step 2
+                            base += " -translate-x-10";     // small left shift
+                        }
+                    } else {
+                        // (A S T H A)
+                        if (step < 3) {
+                            base += " opacity-0";
+                        } else {
+                            base += " opacity-0 animate-letter-reveal";
+                        }
+                    }
+
+                    return (
+                        <span
+                            key={i}
+                            className={base}
+                            style={
+                                i === 0
+                                    ? {}
+                                    : { animationDelay: `${0.12 * (i - 1)}s` }
+                            }
+                        >
+      {letter}
+    </span>
+                    );
+                })}
+
+            </div>
+        </div>
+    );
 }

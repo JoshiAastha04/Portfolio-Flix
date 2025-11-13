@@ -268,7 +268,7 @@ function Row({ title, items, onOpen }) {
                 {title}
             </h3>
 
-            {/* hide arrows on mobile*/}
+            {/* hide arrows on mobile, show md+ */}
             <button
                 aria-label="Scroll left"
                 onClick={() => slide("left")}
@@ -722,7 +722,7 @@ export default function PortfolioNetflixUI() {
         );
     }, [query]);
 
-    // rows: exclusive buckets
+    // rows: exclusive buckets (no duplicates across rows)
     const rows = useMemo(() => {
         const list = Array.isArray(filtered) ? filtered : [];
         const used = new Set();
@@ -790,7 +790,7 @@ export default function PortfolioNetflixUI() {
                 </div>
             </div>
 
-            {/* hero banner*/}
+            {/* hero banner (full-bleed) */}
             <Banner project={featuredProject} onOpen={openProject} />
 
             {/* rows */}
