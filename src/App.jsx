@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from "react";
 import PortfolioNetflixUI from "./components/PortfolioFlixUI.jsx";
 import tadum from "./assets/tadumAudiio.m4a";
 
-// 🚨 NOTE: no types like : string[] or : HTMLAudioElement in JSX files
 
 function NetflixIntro() {
     const [visibleIndex, setVisibleIndex] = useState(-1);
@@ -20,11 +19,11 @@ function NetflixIntro() {
 
         audioRef.current = audio;
 
-        // try muted autoplay (some browsers let this run)
+
         audio
             .play()
             .catch(() => {
-                // it's okay if this fails; we'll play on tap
+                // play on tap
             });
 
         return () => {
@@ -44,8 +43,7 @@ function NetflixIntro() {
         return () => {
             timeouts.forEach((t) => clearTimeout(t));
         };
-        // we can safely ignore letters here since it's a constant
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, []);
 
     const handleIntroClick = () => {

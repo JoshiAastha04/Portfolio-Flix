@@ -30,17 +30,18 @@ import subdub from "../assets/subdub.png";
    Projects
 ================================== */
 const sampleProjects = [
-
     {
         id: "p1",
         title: "Aastha Joshi",
         year: 2024,
         tags: ["Creative", "Communication", "Leadership"],
         category: "Web",
-        description:
-            "Full Stack Developer",
+        description: "Full Stack Developer",
         image: myPhoto,
-        links: { live: "https://linkedin.com/in/aasthajoshi23", code: "https://github.com/JoshiAastha04/Portfolio-Flix" },
+        links: {
+            live: "https://linkedin.com/in/aasthajoshi23",
+            code: "https://github.com/JoshiAastha04/Portfolio-Flix",
+        },
         featured: true,
     },
     {
@@ -123,7 +124,7 @@ const sampleProjects = [
             "Used Godot and GdScript to build the UI, load level, and demo level." +
             "All the changes made in level editor is saved locally.",
         image: leveleditor,
-        links: {code: "https://github.com/amyktruongdev/Elev8" },
+        links: { code: "https://github.com/amyktruongdev/Elev8" },
         featured: false,
     },
     {
@@ -163,8 +164,7 @@ const sampleProjects = [
         year: 2023,
         tags: ["TeamWork", "Willing to Adapt", "Problem Solving"],
         category: "extracurricular",
-        description:
-            "Organised Events like Leetcode Workshop to help students",
+        description: "Organised Events like Leetcode Workshop to help students",
         image: acm,
         links: { live: "#" },
         featured: false,
@@ -210,11 +210,15 @@ function ProjectCard({ project, onOpen }) {
         <motion.button
             layout
             onClick={() => onOpen(project)}
-            className="group relative aspect-video w-[44vw] sm:w-[32vw] md:w-[24vw] lg:w-[18vw] xl:w-[16vw] 2xl:w-[14vw] shrink-0 overflow-hidden rounded-2xl bg-[#232323]"
+            className="group relative aspect-video w-[70vw] sm:w-[44vw] md:w-[24vw] lg:w-[18vw] xl:w-[16vw] 2xl:w-[14vw] shrink-0 overflow-hidden rounded-2xl bg-[#232323]"
             whileHover={{ scale: 1.05, y: -4 }}
             transition={{ type: "spring", stiffness: 280, damping: 22 }}
         >
-            <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+            <img
+                src={project.image}
+                alt={project.title}
+                className="h-full w-full object-cover"
+            />
 
             <div className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white">
                 {project.year}
@@ -224,15 +228,24 @@ function ProjectCard({ project, onOpen }) {
 
             <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                 <div className="flex items-center gap-2">
-                    <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white">{project.category}</span>
+          <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white">
+            {project.category}
+          </span>
                     {tagsSafe.slice(0, 2).map((t) => (
-                        <span key={t} className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white">
+                        <span
+                            key={t}
+                            className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white"
+                        >
               {t}
             </span>
                     ))}
                 </div>
-                <h4 className="mt-1 line-clamp-1 text-left text-sm font-semibold text-white">{project.title}</h4>
-                <p className="line-clamp-1 text-left text-[11px] text-white/70">{project.subtitle}</p>
+                <h4 className="mt-1 line-clamp-1 text-left text-sm font-semibold text-white">
+                    {project.title}
+                </h4>
+                <p className="line-clamp-1 text-left text-[11px] text-white/70">
+                    {project.subtitle}
+                </p>
             </div>
         </motion.button>
     );
@@ -251,12 +264,15 @@ function Row({ title, items, onOpen }) {
 
     return (
         <section className="relative">
-            <h3 className="mb-3 px-4 text-lg font-semibold text-white md:px-8">{title}</h3>
+            <h3 className="mb-3 px-4 text-base font-semibold text-white md:px-8 md:text-lg">
+                {title}
+            </h3>
 
+            {/* hide arrows on mobile*/}
             <button
                 aria-label="Scroll left"
                 onClick={() => slide("left")}
-                className="absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
+                className="hidden md:inline-flex absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
             >
                 <ChevronLeft className="h-5 w-5 text-white" />
             </button>
@@ -273,7 +289,7 @@ function Row({ title, items, onOpen }) {
             <button
                 aria-label="Scroll right"
                 onClick={() => slide("right")}
-                className="absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
+                className="hidden md:inline-flex absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
             >
                 <ChevronRight className="h-5 w-5 text-white" />
             </button>
@@ -299,7 +315,11 @@ function ProjectModal({ open, onClose, project }) {
                     >
                         {/* image banner */}
                         <div className="relative aspect-video w-full">
-                            <img src={project.image} alt={project.title} className="h-full w-full object-cover" />
+                            <img
+                                src={project.image}
+                                alt={project.title}
+                                className="h-full w-full object-cover"
+                            />
                             <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
                             <div className="absolute bottom-3 left-3 flex flex-wrap items-center gap-2">
                                 <button className="inline-flex items-center gap-2 rounded-xl bg-white/95 px-3 py-1.5 text-sm font-semibold text-black hover:bg-white">
@@ -332,19 +352,30 @@ function ProjectModal({ open, onClose, project }) {
                         <div className="space-y-3 p-5">
                             <div className="flex flex-wrap items-center justify-between gap-3">
                                 <div>
-                                    <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                                    <p className="text-sm text-white/70">{project.subtitle}</p>
+                                    <h3 className="text-lg font-bold text-white md:text-xl">
+                                        {project.title}
+                                    </h3>
+                                    <p className="text-xs text-white/70 md:text-sm">
+                                        {project.subtitle}
+                                    </p>
                                 </div>
-                                <div className="flex items-center gap-2 text-[12px] text-white/80">
-                                    <span className="rounded bg-white/10 px-2 py-0.5">{project.category}</span>
+                                <div className="flex flex-wrap items-center gap-2 text-[11px] text-white/80">
+                  <span className="rounded bg-white/10 px-2 py-0.5">
+                    {project.category}
+                  </span>
                                     {(project.tags || []).map((t) => (
-                                        <span key={t} className="rounded bg-white/10 px-2 py-0.5">
+                                        <span
+                                            key={t}
+                                            className="rounded bg-white/10 px-2 py-0.5"
+                                        >
                       {t}
                     </span>
                                     ))}
                                 </div>
                             </div>
-                            <p className="text-sm leading-6 text-white/80">{project.description}</p>
+                            <p className="text-xs leading-6 text-white/80 md:text-sm">
+                                {project.description}
+                            </p>
                         </div>
 
                         <div className="flex justify-end gap-3 border-t border-white/10 p-4">
@@ -365,20 +396,29 @@ function ProjectModal({ open, onClose, project }) {
 function Banner({ project, onOpen }) {
     if (!project) return null;
     return (
-        <section id="hero" className="relative h-[58vh] w-full overflow-hidden rounded-b-3xl bg-[#0b0b0b]">
-            <img src={project.image} alt={project.title} className="absolute inset-0 h-full w-full object-cover" />
+        <section
+            id="hero"
+            className="relative h-[52vh] md:h-[60vh] w-full overflow-hidden rounded-b-3xl bg-[#0b0b0b]"
+        >
+            <img
+                src={project.image}
+                alt={project.title}
+                className="absolute inset-0 h-full w-full object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-[#0b0b0b]/40 to-transparent" />
 
             {/* text overlay */}
-            <div className="relative z-10 mx-auto flex h-full w-full max-w-[100rem] flex-col justify-end px-6 pb-10 md:px-10">
-                <h2 className="max-w-2xl text-3xl font-black tracking-tight text-white md:text-5xl">
+            <div className="relative z-10 mx-auto flex h-full w-full max-w-[100rem] flex-col justify-end px-4 pb-8 md:px-10 md:pb-10">
+                <h2 className="max-w-2xl text-2xl font-black tracking-tight text-white sm:text-3xl md:text-5xl">
                     {project.title}
                 </h2>
-                <p className="mt-3 max-w-xl text-white/80 md:text-lg">{project.description}</p>
-                <div className="mt-5 flex gap-3">
+                <p className="mt-2 max-w-xl text-xs text-white/80 sm:text-sm md:mt-3 md:text-lg">
+                    {project.description}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-3">
                     <button
                         onClick={() => onOpen(project)}
-                        className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-white/90"
+                        className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-xs font-semibold text-black hover:bg:white/90 sm:text-sm"
                     >
                         <Play className="h-4 w-4" /> Open
                     </button>
@@ -387,7 +427,7 @@ function Banner({ project, onOpen }) {
                             href={project.links.code}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20"
+                            className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-2 text-xs font-semibold text-white hover:bg-white/20 sm:text-sm"
                         >
                             <Github className="h-4 w-4" /> View Code
                         </a>
@@ -403,25 +443,47 @@ function Banner({ project, onOpen }) {
 ================================== */
 function Header({ onToggleMobile, mobileOpen, onToggleAbout, query, setQuery }) {
     return (
-        <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-[#0b0b0b] to-transparent shadow-lg shadow-black/20 px-4 py-3 md:px-8">
-            <div className="mx-auto flex w-full items-center justify-between px-4 md:px-8">
-                <div className="flex items-center gap-4">
-                    <button className="md:hidden" onClick={onToggleMobile} aria-label="Toggle menu">
-                        {mobileOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
+        <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-[#0b0b0b] to-transparent shadow-lg shadow-black/20 px-2 py-2 md:px-4 md:py-3">
+            <div className="mx-auto flex w-full items-center justify-between px-2 md:px-4">
+                <div className="flex items-center gap-3">
+                    <button
+                        className="md:hidden"
+                        onClick={onToggleMobile}
+                        aria-label="Toggle menu"
+                    >
+                        {mobileOpen ? (
+                            <X className="h-6 w-6 text-white" />
+                        ) : (
+                            <Menu className="h-6 w-6 text-white" />
+                        )}
                     </button>
 
-                    <div className="text-2xl font-black tracking-tight text-white">
+                    <div className="text-lg font-black tracking-tight text-white md:text-2xl">
                         <span className="text-red-600">Aastha Joshi</span>
                     </div>
 
                     <nav className="hidden gap-6 text-sm font-medium text-white/80 md:flex">
-                        <a className="hover:text-white" href="#hero">Featured</a>
-                        <a className="hover:text-white" href="#web">Web Apps</a>
-                        <a className="hover:text-white" href="#mobile">Mobile</a>
-                        <a className="hover:text-white" href="#game">Game Dev</a>
-                        <a className="hover:text-white" href="#extracurricular">Extracurricular</a>
-                        <a className="hover:text-white" href="#backend">Backend</a>
-                        <button onClick={onToggleAbout} className="hover:text-white">About</button>
+                        <a className="hover:text:white" href="#hero">
+                            Featured
+                        </a>
+                        <a className="hover:text:white" href="#web">
+                            Web Apps
+                        </a>
+                        <a className="hover:text:white" href="#mobile">
+                            Mobile
+                        </a>
+                        <a className="hover:text:white" href="#game">
+                            Game Dev
+                        </a>
+                        <a className="hover:text:white" href="#extracurricular">
+                            Extracurricular
+                        </a>
+                        <a className="hover:text:white" href="#backend">
+                            Backend
+                        </a>
+                        <button onClick={onToggleAbout} className="hover:text:white">
+                            About
+                        </button>
                     </nav>
                 </div>
 
@@ -432,13 +494,13 @@ function Header({ onToggleMobile, mobileOpen, onToggleAbout, query, setQuery }) 
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search projects"
-                            className="w-52 rounded-xl bg-white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring-white/30"
+                            className="w-52 rounded-xl bg:white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring:white/30"
                         />
                     </div>
 
                     <button
                         onClick={onToggleAbout}
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-purple-600 ring-2 ring-white/20 hover:scale-105 hover:ring-white/40 transition-transform"
+                        className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-purple-600 ring-2 ring-white/20 hover:scale-105 hover:ring:white/40 transition-transform"
                         title="About Me"
                     >
                         <span className="sr-only">About Me</span>
@@ -460,13 +522,27 @@ function MobileMenu({ open, onToggleAbout }) {
                     exit={{ height: 0, opacity: 0 }}
                 >
                     <div className="space-y-2 bg-black/60 px-4 pb-4 pt-2 text-white backdrop-blur">
-                        <a className="block" href="#hero">Featured</a>
-                        <a className="block" href="#web">Web Apps</a>
-                        <a className="block" href="#mobile">Mobile</a>
-                        <a className="block" href="#game">Game Dev</a>
-                        <a className="block" href="#extracurricular">Extracurricular</a>
-                        <a className="block" href="#backend">Backend</a>
-                        <button onClick={onToggleAbout} className="block w-full text-left">About</button>
+                        <a className="block" href="#hero">
+                            Featured
+                        </a>
+                        <a className="block" href="#web">
+                            Web Apps
+                        </a>
+                        <a className="block" href="#mobile">
+                            Mobile
+                        </a>
+                        <a className="block" href="#game">
+                            Game Dev
+                        </a>
+                        <a className="block" href="#extracurricular">
+                            Extracurricular
+                        </a>
+                        <a className="block" href="#backend">
+                            Backend
+                        </a>
+                        <button onClick={onToggleAbout} className="block w-full text-left">
+                            About
+                        </button>
                     </div>
                 </motion.nav>
             )}
@@ -505,7 +581,7 @@ function AboutPanel({ open, onClose }) {
                             <h3 className="text-lg font-bold tracking-tight">About Me</h3>
                             <button
                                 onClick={onClose}
-                                className="rounded-md bg-white/10 p-1.5 hover:bg-white/20"
+                                className="rounded-md bg-white/10 p-1.5 hover:bg:white/20"
                                 aria-label="Close About panel"
                             >
                                 <X className="h-5 w-5" />
@@ -517,27 +593,51 @@ function AboutPanel({ open, onClose }) {
                                 <img
                                     src={myPhoto}
                                     alt="Aastha Joshi"
-                                    className="h-20 w-20 rounded-full ring-2 ring-white/20 object-cover shadow-lg"
+                                    className="h-20 w-20 rounded-full ring-2 ring:white/20 object-cover shadow-lg"
                                 />
                                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/40 to-purple-600/40 blur-md opacity-70 animate-pulse" />
                             </div>
 
-                            <h4 className="mt-2 text-white font-semibold text-base">Aastha Joshi</h4>
-                            <p className="mt-1 text-xs text-white/60">Full-Stack Developer</p>
+                            <h4 className="mt-2 text-white font-semibold text-base">
+                                Aastha Joshi
+                            </h4>
+                            <p className="mt-1 text-xs text-white/60">
+                                Full-Stack Developer
+                            </p>
                         </div>
 
                         <div className="mt-4 space-y-4 text-sm text-white/80">
-                            <p className="leading-6">
-                                Hey there! I’m Aastha Joshi, a CompSci student at Cal State Northridge, and a passionate Full Stack Developer who loves bringing creative ideas to life through code.
-                                My portfolio showcases projects that blend design and functionality, from full-stack web apps to mobile experiences and even a bit game development.
-                                I’ve built everything from an e-commerce store and a flight reservation system to an ADHD support app and data collection tools using technologies like React, Spring Boot, FastAPI, and PostgreSQL.
-                                Beyond coding, I’m also active in leadership roles as the Vice President of ACM and Secretary of ISA, where I enjoy collaborating, organizing events, and empowering others in tech.
-                                For me, development is all about creating meaningful digital experiences that inspire and connect people.
+                            <p className="leading-6 text-xs sm:text-sm">
+                                Hey there! I’m Aastha Joshi, a CompSci student at Cal State
+                                Northridge, and a passionate Full Stack Developer who loves
+                                bringing creative ideas to life through code. My portfolio
+                                showcases projects that blend design and functionality, from
+                                full-stack web apps to mobile experiences and even a bit game
+                                development. I’ve built everything from an e-commerce store and
+                                a flight reservation system to an ADHD support app and data
+                                collection tools using technologies like React, Spring Boot,
+                                FastAPI, and PostgreSQL. Beyond coding, I’m also active in
+                                leadership roles as the Vice President of ACM and Secretary of
+                                ISA, where I enjoy collaborating, organizing events, and
+                                empowering others in tech. For me, development is all about
+                                creating meaningful digital experiences that inspire and connect
+                                people.
                             </p>
 
                             <div className="flex flex-wrap gap-2">
-                                {["HTML/CSS (Tailwind)", "Javascript", "React.js", "Spring Boot(Java)", "FastAPI(Python)", "PostgreSQL", "MongoDB"].map((t) => (
-                                    <span key={t} className="rounded-full bg-white/10 px-3 py-1 text-xs">
+                                {[
+                                    "HTML/CSS (Tailwind)",
+                                    "Javascript",
+                                    "React.js",
+                                    "Spring Boot(Java)",
+                                    "FastAPI(Python)",
+                                    "PostgreSQL",
+                                    "MongoDB",
+                                ].map((t) => (
+                                    <span
+                                        key={t}
+                                        className="rounded-full bg-white/10 px-3 py-1 text-xs"
+                                    >
                     {t}
                   </span>
                                 ))}
@@ -548,33 +648,41 @@ function AboutPanel({ open, onClose }) {
                                     href="https://github.com/joshiaastha04"
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg-white/10"
+                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
                                 >
                                     <Github className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text-white">GitHub</span>
+                                    <span className="text-xs text-white/80 group-hover:text:white">
+                    GitHub
+                  </span>
                                 </a>
                                 <a
                                     href="https://linkedin.com/in/aasthajoshi23"
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg-white/10"
+                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
                                 >
                                     <Linkedin className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text-white">LinkedIn</span>
+                                    <span className="text-xs text-white/80 group-hover:text:white">
+                    LinkedIn
+                  </span>
                                 </a>
                                 <a
                                     href="mailto:aasthajoshi3010@gmail.com"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg-white/10"
+                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
                                 >
                                     <Mail className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text-white">Email</span>
+                                    <span className="text-xs text-white/80 group-hover:text:white">
+                    Email
+                  </span>
                                 </a>
                             </div>
                         </div>
 
-                        <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-4">
-                            <span className="text-xs text-white/50">© {new Date().getFullYear()} Aastha Joshi</span>
-                            <button className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg-white/20">
+                        <div className="mt-auto flex items-center justify-between border-t border:white/10 pt-4">
+              <span className="text-xs text-white/50">
+                © {new Date().getFullYear()} Aastha Joshi
+              </span>
+                            <button className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg:white/20">
                                 Close
                             </button>
                         </div>
@@ -608,12 +716,13 @@ export default function PortfolioNetflixUI() {
         return sampleProjects.filter(
             (p) =>
                 p.title.toLowerCase().includes(q) ||
-                p.subtitle.toLowerCase().includes(q) ||
-                (Array.isArray(p.tags) && p.tags.join(" ").toLowerCase().includes(q))
+                p.subtitle?.toLowerCase().includes(q) ||
+                (Array.isArray(p.tags) &&
+                    p.tags.join(" ").toLowerCase().includes(q))
         );
     }, [query]);
 
-    // rows: exclusive buckets (no duplicates across rows)
+    // rows: exclusive buckets
     const rows = useMemo(() => {
         const list = Array.isArray(filtered) ? filtered : [];
         const used = new Set();
@@ -629,7 +738,9 @@ export default function PortfolioNetflixUI() {
         const mobile = uniq(list.filter((p) => p.category === "Mobile"));
         const game = uniq(list.filter((p) => p.category === "Game"));
         const backend = uniq(list.filter((p) => p.category === "backend"));
-        const extracurricular = uniq(list.filter((p) => p.category === "extracurricular"));
+        const extracurricular = uniq(
+            list.filter((p) => p.category === "extracurricular")
+        );
         const rest = uniq(list);
 
         return [
@@ -637,8 +748,12 @@ export default function PortfolioNetflixUI() {
             { id: "web", title: "Web Apps", items: web },
             { id: "mobile", title: "Mobile", items: mobile },
             { id: "game", title: "Game Development", items: game },
-            {id: "backend", title: "Backend Development", items: backend },
-            { id: "extracurricular", title: "Extracurricular", items: extracurricular },
+            { id: "backend", title: "Backend Development", items: backend },
+            {
+                id: "extracurricular",
+                title: "Extracurricular",
+                items: extracurricular,
+            },
             { id: "all", title: "All Projects", items: rest },
         ];
     }, [filtered]);
@@ -657,7 +772,10 @@ export default function PortfolioNetflixUI() {
                 query={query}
                 setQuery={setQuery}
             />
-            <MobileMenu open={mobileOpen} onToggleAbout={() => setAboutOpen(true)} />
+            <MobileMenu
+                open={mobileOpen}
+                onToggleAbout={() => setAboutOpen(true)}
+            />
 
             {/* mobile search */}
             <div className="mx-auto mt-2 block w-full px-4 md:hidden">
@@ -667,16 +785,16 @@ export default function PortfolioNetflixUI() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search projects"
-                        className="w-full rounded-xl bg-white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring-white/30"
+                        className="w-full rounded-xl bg-white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring:white/30"
                     />
                 </div>
             </div>
 
-            {/* hero banner (full-bleed) */}
+            {/* hero banner*/}
             <Banner project={featuredProject} onOpen={openProject} />
 
             {/* rows */}
-            <main className="mt-2 grid w-full gap-8">
+            <main className="mt-4 grid w-full gap-8 pb-10">
                 {rows.map((row) => (
                     <div key={row.id} id={row.id} className="px-0 scroll-mt-24">
                         <Row title={row.title} items={row.items} onOpen={openProject} />
@@ -685,17 +803,30 @@ export default function PortfolioNetflixUI() {
             </main>
 
             {/* footer */}
-            <section className="mt-16 w-full px-6 md:px-10">
-                <footer className="mt-2 flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-sm text-white/60 md:flex-row">
+            <section className="mt-4 w-full px-6 md:px-10">
+                <footer className="mt-2 flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs text-white/60 md:flex-row md:text-sm">
                     <div>© {new Date().getFullYear()} Aastha Joshi</div>
                     <div className="flex items-center gap-4">
-                        <a href="https://github.com/joshiaastha04" target="_blank" rel="noreferrer" className="hover:text-white">
+                        <a
+                            href="https://github.com/joshiaastha04"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:text:white"
+                        >
                             GitHub
                         </a>
-                        <a href="https://linkedin.com/in/aasthajoshi23" target="_blank" rel="noreferrer" className="hover:text-white">
+                        <a
+                            href="https://linkedin.com/in/aasthajoshi23"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="hover:text:white"
+                        >
                             LinkedIn
                         </a>
-                        <a href="mailto:aasthajoshi3010@gmail.com" className="hover:text-white">
+                        <a
+                            href="mailto:aasthajoshi3010@gmail.com"
+                            className="hover:text:white"
+                        >
                             Email
                         </a>
                     </div>
@@ -705,7 +836,11 @@ export default function PortfolioNetflixUI() {
             {/* panels & modals */}
             <>
                 <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
-                <ProjectModal open={modalOpen} onClose={() => setModalOpen(false)} project={activeProject} />
+                <ProjectModal
+                    open={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    project={activeProject}
+                />
             </>
         </div>
     );
