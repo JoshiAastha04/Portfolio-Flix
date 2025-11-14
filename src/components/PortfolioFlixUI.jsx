@@ -608,7 +608,7 @@ function AboutPanel({ open, onClose }) {
 
                         <div className="mt-4 space-y-4 text-sm text-white/80">
                             <p className="leading-6 text-xs sm:text-sm">
-                                Hiee! I’m Aastha Joshi, a Computer Science student at Cal State Northridge and a passionate Full Stack Developer who loves bringing creative ideas to life through code.
+                                Hiee! I’m Aastha Joshi, a Senior Comp Sci student at Cal State Northridge and a passionate Full Stack Developer who loves bringing creative ideas to life through code.
                                 <br /><br />
                                 I build projects that blend clean design with real functionality from full-stack web apps to mobile experiences and even small game projects.
                                 <br /><br />
