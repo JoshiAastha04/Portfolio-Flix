@@ -33,10 +33,11 @@ const sampleProjects = [
     {
         id: "p1",
         title: "Aastha Joshi",
-        year: 2024,
         tags: ["Creative", "Communication", "Leadership"],
         category: "",
-        description: "Full Stack Developer",
+        year: 2025,
+        description: "Built this portfolio Netflix-style...\n" +
+            "Now Imagine what I'll build for your company ;)",
         image: myPhoto,
         links: {
             live: "https://linkedin.com/in/aasthajoshi23",
@@ -64,7 +65,7 @@ const sampleProjects = [
         featured: true,
     },
     {
-        id: "p10",
+        id: "p3",
         title: "E-Commerce Store",
         subtitle: "Personal Project",
         year: 2025,
@@ -82,7 +83,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p3",
+        id: "p4",
         title: "ADHD Social App",
         subtitle: "Hackathon Project",
         year: 2025,
@@ -97,8 +98,8 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p4",
-        title: "Study Config Platform",
+        id: "p5",
+        title: "Data Collection Tool",
         subtitle: "NSF Sponsored Summer Internship",
         year: 2025,
         tags: ["FastAPI", "PostgreSQL", "Next.js"],
@@ -113,7 +114,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p5",
+        id: "p6",
         title: "Elev8",
         subtitle: "Group Project",
         year: 2025,
@@ -128,7 +129,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p6",
+        id: "p7",
         title: "Key Card.net",
         subtitle: "Group Project",
         year: 2025,
@@ -141,7 +142,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p7",
+        id: "p8",
         title: "Airline Reservation System",
         subtitle: "Group Project",
         year: 2024,
@@ -155,10 +156,10 @@ const sampleProjects = [
             "Integrated secure user authentication with JWT tokens, allowing users to manage their bookings safely and efficiently.",
         image: airline,
         links: { code: "https://github.com/MSantoscoy/MITA-projDev" },
-        featured: true,
+        featured: false,
     },
     {
-        id: "p8",
+        id: "p9",
         title: "ACM",
         subtitle: "Vice President",
         year: 2023,
@@ -170,7 +171,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p9",
+        id: "p10",
         title: "ISA",
         subtitle: "Secretary",
         year: 2024,
@@ -252,50 +253,39 @@ function ProjectCard({ project, onOpen }) {
 }
 
 function Row({ title, items, onOpen }) {
-    const scrollerRef = useRef(null);
-    const slide = (dir) => {
-        const el = scrollerRef.current;
-        if (!el) return;
-        const delta = Math.round(el.clientWidth * 0.9);
-        el.scrollBy({ left: dir === "left" ? -delta : delta, behavior: "smooth" });
-    };
-
     if (!items?.length) return null;
 
     return (
-        <section className="relative">
-            <h3 className="mb-3 px-4 text-base font-semibold text-white md:px-8 md:text-lg">
-                {title}
-            </h3>
-
-            {/* hide arrows on mobile, show md+ */}
-            <button
-                aria-label="Scroll left"
-                onClick={() => slide("left")}
-                className="hidden md:inline-flex absolute left-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
-            >
-                <ChevronLeft className="h-5 w-5 text-white" />
-            </button>
-
-            <div
-                ref={scrollerRef}
-                className="scrollbar-none relative flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 md:gap-4 md:px-8"
-            >
-                {items.map((p) => (
-                    <ProjectCard key={p.id} project={p} onOpen={onOpen} />
-                ))}
+        <section className="pt-4 pb-2">
+            {/* Title */}
+            <div className="px-4 md:px-8">
+                <h3 className="text-2xl md:text-3xl font-semibold text-white">
+                    {title}
+                </h3>
             </div>
 
-            <button
-                aria-label="Scroll right"
-                onClick={() => slide("right")}
-                className="hidden md:inline-flex absolute right-1 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/60 p-2 backdrop-blur hover:bg-black/80"
+            {/* Scrollable row – same idea as food blog */}
+            <div
+                className="
+                    mt-3
+                    flex
+                    gap-3
+                    overflow-x-auto
+                    overflow-y-hidden
+                    px-4 md:px-8
+                    scrollbar-none
+                "
             >
-                <ChevronRight className="h-5 w-5 text-white" />
-            </button>
+                {items.map((p) => (
+                   <div key={p.id} className="flex-row w-33">
+                        <ProjectCard project={p} onOpen={onOpen} />
+                    </div>
+                ))}
+            </div>
         </section>
     );
 }
+
 
 function ProjectModal({ open, onClose, project }) {
     return (
@@ -403,7 +393,7 @@ function Banner({ project, onOpen }) {
             <img
                 src={project.image}
                 alt={project.title}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-[#0b0b0b]/40 to-transparent" />
 
@@ -412,7 +402,7 @@ function Banner({ project, onOpen }) {
                 <h2 className="max-w-2xl text-2xl font-black tracking-tight text-white sm:text-3xl md:text-5xl">
                     {project.title}
                 </h2>
-                <p className="mt-2 max-w-xl text-xs text-white/80 sm:text-sm md:mt-3 md:text-lg">
+                <p className="text-white/80 whitespace-pre-line leading-snug text-base md:text-lg">
                     {project.description}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-3">
@@ -718,23 +708,17 @@ export default function PortfolioNetflixUI() {
     // rows: exclusive buckets (no duplicates across rows)
     const rows = useMemo(() => {
         const list = Array.isArray(filtered) ? filtered : [];
-        const used = new Set();
-        const uniq = (arr) =>
-            arr.filter((p) => {
-                if (used.has(p.id)) return false;
-                used.add(p.id);
-                return true;
-            });
 
-        const featured = uniq(list.filter((p) => p.featured));
-        const web = uniq(list.filter((p) => p.category === "Web"));
-        const mobile = uniq(list.filter((p) => p.category === "Mobile"));
-        const game = uniq(list.filter((p) => p.category === "Game"));
-        const backend = uniq(list.filter((p) => p.category === "backend"));
-        const extracurricular = uniq(
-            list.filter((p) => p.category === "extracurricular")
+        const uniqueAll = Array.from(
+            new Map(list.map((p) => [p.id, p])).values()
         );
-        const rest = uniq(list);
+
+        const featured        = list.filter((p) => p.featured);
+        const web             = list.filter((p) => p.category === "Web");
+        const mobile          = list.filter((p) => p.category === "Mobile");
+        const game            = list.filter((p) => p.category === "Game");
+        const backend         = list.filter((p) => p.category === "backend");
+        const extracurricular = list.filter((p) => p.category === "extracurricular");
 
         return [
             { id: "featured", title: "Featured Projects", items: featured },
@@ -742,12 +726,8 @@ export default function PortfolioNetflixUI() {
             { id: "mobile", title: "Mobile", items: mobile },
             { id: "game", title: "Game Development", items: game },
             { id: "backend", title: "Backend Development", items: backend },
-            {
-                id: "extracurricular",
-                title: "Extracurricular",
-                items: extracurricular,
-            },
-            { id: "all", title: "All Projects", items: rest },
+            { id: "extracurricular", title: "Extracurricular", items: extracurricular },
+            { id: "all", title: "All Projects", items: uniqueAll },
         ];
     }, [filtered]);
 
@@ -757,7 +737,7 @@ export default function PortfolioNetflixUI() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0b0b0b] text-white">
+        <div className="min-h-screen bg-[#0b0b0b] text-white overflow-x-hidden">
             <Header
                 onToggleMobile={() => setMobileOpen((v) => !v)}
                 mobileOpen={mobileOpen}
@@ -783,7 +763,7 @@ export default function PortfolioNetflixUI() {
                 </div>
             </div>
 
-            {/* hero banner (full-bleed) */}
+            {/* hero banner*/}
             <Banner project={featuredProject} onOpen={openProject} />
 
             {/* rows */}

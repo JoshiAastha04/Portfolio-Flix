@@ -1,9 +1,17 @@
-/* src/index.css */
 @import "tailwindcss";
 
-body { @apply bg-[#0b0b0b] text-white; }
-html {
-    scroll-behavior: smooth;
+/* index.css */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #000;
+    color: #fff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    sans-serif;
+   /* overflow-x: hidden;*/
 }
 
 /* intro animation */
@@ -21,3 +29,53 @@ html {
 .animate-letter-reveal {
     animation: letterReveal 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+
+/* Arc warp */
+.netflix-arc {
+    transform: scale(1.05) perspective(400px) rotateX(8deg);
+}
+
+/* Light sweep (the bright vertical beam passing through letters) */
+.netflix-sweep {
+    position: relative;
+    overflow: hidden;
+}
+
+.netflix-sweep::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.35) 40%,
+            transparent 100%
+    );
+    animation: sweep 2.2s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes sweep {
+    0% { left: -120%; }
+    100% { left: 150%; }
+}
+
+/* Sharp letter pop */
+@keyframes netflix-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.netflix-pop {
+    animation: netflix-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+

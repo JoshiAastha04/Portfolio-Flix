@@ -68,39 +68,46 @@ function Intro({ onFinish }) {
             onClick={enableSound}
             className="relative flex items-center justify-center min-h-screen text-white font-extrabold tracking-tight cursor-pointer"
             style={{
-                background: "radial-gradient(circle at center, #e50914 0%, #000 70%)",
+                background: "#000",
                 userSelect: "none",
             }}
         >
             {/* LETTER ANIMATION */}
-            <div className="flex items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl gap-1">
+            <div className="flex items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl gap-1 netflix-arc">
                 {letters.map((letter, i) => {
-                    let base = "inline-block transition-all duration-500";
+                    let classes = [
+                        "inline-block",
+                        "transition-all",
+                        "duration-500",
+                        "text-red-600",
+                        "netflix-pop",
+                        "netflix-sweep"
+                    ];
 
                     if (i === 0) {
-                        // main A
-                        if (step < 1) base += " opacity-0";
-                        else base += " opacity-100";
+                        // Main A
+                        classes.push(step < 1 ? "opacity-10" : "opacity-100");
 
-                        if (step === 2) base += " -translate-x-6";
+                        if (step === 2) classes.push("-translate-x-1");
                     } else {
-                        if (step < 3) base += " opacity-0";
-                        else
-                            base += ` opacity-0 intro-letter-${i} animate-letter-reveal`;
+                        // Remaining letters
+                        if (step < 3) classes.push("opacity-100");
+                        else {
+                            classes.push(`intro-letter-${i}`, "animate-letter-reveal");
+                        }
                     }
 
                     return (
                         <span
                             key={i}
-                            className={base}
-                            style={
-                                i === 0 ? {} : { animationDelay: `${0.12 * (i - 1)}s` }
-                            }
+                            className={classes.join(" ")}
+                            style={i === 0 ? {} : { animationDelay: `${0.12 * (i - 1)}s` }}
                         >
-                            {letter}
-                        </span>
+            {letter}
+        </span>
                     );
                 })}
+
             </div>
 
             {/* TAP TO ENABLE SOUND MESSAGE */}
