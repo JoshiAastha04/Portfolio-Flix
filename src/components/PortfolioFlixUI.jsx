@@ -608,20 +608,13 @@ function AboutPanel({ open, onClose }) {
 
                         <div className="mt-4 space-y-4 text-sm text-white/80">
                             <p className="leading-6 text-xs sm:text-sm">
-                                Hey there! I’m Aastha Joshi, a CompSci student at Cal State
-                                Northridge, and a passionate Full Stack Developer who loves
-                                bringing creative ideas to life through code. My portfolio
-                                showcases projects that blend design and functionality, from
-                                full-stack web apps to mobile experiences and even a bit game
-                                development. I’ve built everything from an e-commerce store and
-                                a flight reservation system to an ADHD support app and data
-                                collection tools using technologies like React, Spring Boot,
-                                FastAPI, and PostgreSQL. Beyond coding, I’m also active in
-                                leadership roles as the Vice President of ACM and Secretary of
-                                ISA, where I enjoy collaborating, organizing events, and
-                                empowering others in tech. For me, development is all about
-                                creating meaningful digital experiences that inspire and connect
-                                people.
+                                Hiee! I’m Aastha Joshi, a Computer Science student at Cal State Northridge and a passionate Full Stack Developer who loves bringing creative ideas to life through code.
+                                <br /><br />
+                                I build projects that blend clean design with real functionality from full-stack web apps to mobile experiences and even small game projects.
+                                <br /><br />
+                                I’m also growing my cloud skills with AWS and staying active in leadership as the VP of ACM and Secretary of ISA.
+                                <br /><br />
+                                For me, development is about creating digital experiences that connect, inspire, and make an impact.
                             </p>
 
                             <div className="flex flex-wrap gap-2">
