@@ -35,7 +35,7 @@ const sampleProjects = [
         title: "Aastha Joshi",
         year: 2024,
         tags: ["Creative", "Communication", "Leadership"],
-        category: "Web",
+        category: "",
         description: "Full Stack Developer",
         image: myPhoto,
         links: {
