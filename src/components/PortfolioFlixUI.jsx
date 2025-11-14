@@ -265,12 +265,7 @@ function Row({ title, items, onOpen }) {
             </div>
 
 
-            <div className="mt-1 flex items-center gap-1 px-4 text-xs text-white/60 md:hidden">
-                <span>Swipe to explore</span>
-                <span className="-mb-[1px] text-sm">→</span>
-            </div>
             {/* Scrollable row  */}
-
             <div
                 className="
                     mt-2
