@@ -14,7 +14,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 // assets
-import myPhoto from "../assets/pic.png";
+import myPhoto from "../../public/me2.png";
+import myphoto2 from "../assets/pic.png";
 import foodblog from "../assets/foodblog.png";
 import airline from "../assets/airline.png";
 import leveleditor from "../assets/elev8.png";
@@ -38,7 +39,7 @@ const sampleProjects = [
         year: 2025,
         description: "Built this portfolio Netflix-style...\n" +
             "Now Imagine what I'll build for your company ;)",
-        image: myPhoto,
+        image: myphoto2,
         links: {
             live: "https://linkedin.com/in/aasthajoshi23",
             code: "https://github.com/JoshiAastha04/Portfolio-Flix",
@@ -490,11 +491,15 @@ function Header({ onToggleMobile, mobileOpen, onToggleAbout, query, setQuery }) 
 
                     <button
                         onClick={onToggleAbout}
-                        className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-500 to-purple-600 ring-2 ring-white/20 hover:scale-105 hover:ring:white/40 transition-transform"
-                        title="About Me"
+                        className="h-8 w-8 rounded-full overflow-hidden border border-white/20"
                     >
-                        <span className="sr-only">About Me</span>
+                        <img
+                            src="/me2.png"
+                            alt="Profile"
+                            className="h-full w-full object-cover"
+                        />
                     </button>
+
                 </div>
             </div>
         </header>
@@ -583,9 +588,9 @@ function AboutPanel({ open, onClose }) {
                                 <img
                                     src={myPhoto}
                                     alt="Aastha Joshi"
-                                    className="h-20 w-20 rounded-full ring-2 ring:white/20 object-cover shadow-lg"
+                                    className="h-25 w-25 rounded-full ring-2 ring:white/20 object-cover"
                                 />
-                                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500/40 to-purple-600/40 blur-md opacity-70 animate-pulse" />
+                                <div className="absolute inset-0 rounded-full bg-gradient-to-br opacity-70 animate-pulse" />
                             </div>
 
                             <h4 className="mt-2 text-white font-semibold text-base">
