@@ -46,7 +46,7 @@ const sampleProjects = [
         featured: true,
     },
     {
-        id: "p2",
+        id: "p5",
         title: "Food Blog",
         subtitle: "Personal Project",
         year: 2023,
@@ -98,7 +98,7 @@ const sampleProjects = [
         featured: false,
     },
     {
-        id: "p5",
+        id: "p2",
         title: "Data Collection Tool",
         subtitle: "NSF Sponsored Summer Internship",
         year: 2025,
@@ -111,7 +111,7 @@ const sampleProjects = [
             "devices.",
         image: studyplatform,
         links: { code: "https://github.com/cfd-summer-internship" },
-        featured: false,
+        featured: true,
     },
     {
         id: "p6",
@@ -256,18 +256,24 @@ function Row({ title, items, onOpen }) {
     if (!items?.length) return null;
 
     return (
-        <section className="pt-4 pb-2">
-            {/* Title */}
+        <section className="py-6">
+            {/* Row title */}
             <div className="px-4 md:px-8">
                 <h3 className="text-2xl md:text-3xl font-semibold text-white">
                     {title}
                 </h3>
             </div>
 
-            {/* Scrollable row – same idea as food blog */}
+
+            <div className="mt-1 flex items-center gap-1 px-4 text-xs text-white/60 md:hidden">
+                <span>Swipe to explore</span>
+                <span className="-mb-[1px] text-sm">→</span>
+            </div>
+            {/* Scrollable row  */}
+
             <div
                 className="
-                    mt-3
+                    mt-2
                     flex
                     gap-3
                     overflow-x-auto
@@ -277,15 +283,14 @@ function Row({ title, items, onOpen }) {
                 "
             >
                 {items.map((p) => (
-                   <div key={p.id} className="flex-row w-33">
-                        <ProjectCard project={p} onOpen={onOpen} />
-                    </div>
+                    <div key={p.id} className="flex-row w-30">
+                    <ProjectCard key={p.id} project={p} onOpen={onOpen} />
+                        </div>
                 ))}
             </div>
         </section>
     );
 }
-
 
 function ProjectModal({ open, onClose, project }) {
     return (
