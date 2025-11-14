@@ -22,31 +22,35 @@ export default function App() {
 
 function Intro({ onFinish }) {
     const [step, setStep] = useState(0);
+    const [soundEnabled, setSoundEnabled] = useState(false);
     const audioRef = useRef(null);
 
     const letters = ["A", "A", "S", "T", "H", "A"];
 
+
+    // AUDIO + TIMERS
     useEffect(() => {
         const audio = new Audio(tadum);
         audio.volume = 1.0;
-        audio.muted = true;
+        audio.muted = true;   // must start muted for autoplay
         audio.playsInline = true;
         audioRef.current = audio;
 
         audio.play().catch(() => {});
 
-        // animation timeline
         const timers = [
-            setTimeout(() => setStep(1), 500),   // show first A
-            setTimeout(() => setStep(2), 1400),  // slide first A left
-            setTimeout(() => setStep(3), 1500),  // reveal rest
-            setTimeout(() => setStep(4), 3000),  // hold / pulse
-            setTimeout(() => onFinish(), 3800),  // go to main UI
+            setTimeout(() => setStep(1), 500),
+            setTimeout(() => setStep(2), 1400),
+            setTimeout(() => setStep(3), 1500),
+            setTimeout(() => setStep(4), 3000),
+            setTimeout(() => onFinish(), 3800),
         ];
 
         return () => timers.forEach(clearTimeout);
     }, [onFinish]);
 
+
+    // TAP TO ENABLE SOUND
     const enableSound = () => {
         const audio = audioRef.current;
         if (!audio) return;
@@ -54,41 +58,35 @@ function Intro({ onFinish }) {
         audio.muted = false;
         audio.currentTime = 0;
         audio.play().catch(() => {});
+
+        setSoundEnabled(true); // hide text after tap
     };
 
+    // UI
     return (
         <div
             onClick={enableSound}
-            className="flex items-center justify-center min-h-screen text-white font-extrabold tracking"
+            className="relative flex items-center justify-center min-h-screen text-white font-extrabold tracking-tight cursor-pointer"
             style={{
                 background: "radial-gradient(circle at center, #e50914 0%, #000 70%)",
                 userSelect: "none",
             }}
         >
-            <div className="flex items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-
+            {/* LETTER ANIMATION */}
+            <div className="flex items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl gap-1">
                 {letters.map((letter, i) => {
                     let base = "inline-block transition-all duration-500";
 
                     if (i === 0) {
-                        // FIRST A
-                        if (step < 1) {
-                            base += " opacity-0";          // hidden
-                        } else {
-                            base += " opacity-100";        // visible after step 1
-                        }
+                        // main A
+                        if (step < 1) base += " opacity-0";
+                        else base += " opacity-100";
 
-                        if (step === 2) {
-                            // slide only DURING step 2
-                            base += " -translate-x-10";     // small left shift
-                        }
+                        if (step === 2) base += " -translate-x-6";
                     } else {
-                        // (A S T H A)
-                        if (step < 3) {
-                            base += " opacity-0";
-                        } else {
-                            base += " opacity-0 animate-letter-reveal";
-                        }
+                        if (step < 3) base += " opacity-0";
+                        else
+                            base += ` opacity-0 intro-letter-${i} animate-letter-reveal`;
                     }
 
                     return (
@@ -96,17 +94,25 @@ function Intro({ onFinish }) {
                             key={i}
                             className={base}
                             style={
-                                i === 0
-                                    ? {}
-                                    : { animationDelay: `${0.12 * (i - 1)}s` }
+                                i === 0 ? {} : { animationDelay: `${0.12 * (i - 1)}s` }
                             }
                         >
-      {letter}
-    </span>
+                            {letter}
+                        </span>
                     );
                 })}
-
             </div>
+
+            {/* TAP TO ENABLE SOUND MESSAGE */}
+            {!soundEnabled && (
+                <div
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2
+                               text-white text-lg opacity-80
+                               animate-pulse"
+                >
+                    Tap to enable sound 🔊
+                </div>
+            )}
         </div>
     );
 }
