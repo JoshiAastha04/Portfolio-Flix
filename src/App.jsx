@@ -106,7 +106,7 @@ function Intro({ onFinish }) {
             {/* TAP TO ENABLE SOUND MESSAGE */}
             {!soundEnabled && (
                 <div
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2
+                    className="absolute bottom-30 left-1/2 -translate-x-1/2
                                text-white text-lg opacity-80
                                animate-pulse"
                 >
