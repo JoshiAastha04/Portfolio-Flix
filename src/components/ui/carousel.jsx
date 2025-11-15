@@ -1,6 +1,7 @@
+// src/components/ui/carousel.jsx
 import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -40,15 +41,6 @@ const Carousel = React.forwardRef(
         const [canScrollPrev, setCanScrollPrev] = React.useState(false);
         const [canScrollNext, setCanScrollNext] = React.useState(false);
 
-        const onSelect = React.useCallback(
-            (apiInstance) => {
-                if (!apiInstance) return;
-                setCanScrollPrev(apiInstance.canScrollPrev());
-                setCanScrollNext(apiInstance.canScrollNext());
-            },
-            []
-        );
-
         const scrollPrev = React.useCallback(() => {
             api?.scrollPrev();
         }, [api]);
@@ -56,6 +48,27 @@ const Carousel = React.forwardRef(
         const scrollNext = React.useCallback(() => {
             api?.scrollNext();
         }, [api]);
+
+        const onSelect = React.useCallback((embla) => {
+            if (!embla) return;
+            setCanScrollPrev(embla.canScrollPrev());
+            setCanScrollNext(embla.canScrollNext());
+        }, []);
+
+        React.useEffect(() => {
+            if (!api) return;
+
+            if (setApi) setApi(api);
+
+            onSelect(api);
+            api.on("reInit", onSelect);
+            api.on("select", onSelect);
+
+            return () => {
+                api.off("reInit", onSelect);
+                api.off("select", onSelect);
+            };
+        }, [api, setApi, onSelect]);
 
         const handleKeyDown = React.useCallback(
             (event) => {
@@ -69,23 +82,6 @@ const Carousel = React.forwardRef(
             },
             [scrollPrev, scrollNext]
         );
-
-        React.useEffect(() => {
-            if (!api || !setApi) return;
-            setApi(api);
-        }, [api, setApi]);
-
-        React.useEffect(() => {
-            if (!api) return;
-
-            onSelect(api);
-            api.on("reInit", onSelect);
-            api.on("select", onSelect);
-
-            return () => {
-                api.off("select", onSelect);
-            };
-        }, [api, onSelect]);
 
         return (
             <CarouselContext.Provider
@@ -115,6 +111,7 @@ const Carousel = React.forwardRef(
         );
     }
 );
+
 Carousel.displayName = "Carousel";
 
 const CarouselContent = React.forwardRef(({ className, ...props }, ref) => {
@@ -155,52 +152,73 @@ const CarouselItem = React.forwardRef(({ className, ...props }, ref) => {
 });
 CarouselItem.displayName = "CarouselItem";
 
-/* 🔥 CUSTOM ARROW BUTTONS THAT WORK EVERYWHERE */
+/**
+ * Shared button base:
+ * - fixed to screen
+ * - centered vertically
+ * - nice round dark pill
+ */
+const CarouselButton = React.forwardRef(({ className, ...props }, ref) => (
+    <button
+        ref={ref}
+        type="button"
+        className={cn(
+            "fixed top-1/2 -translate-y-1/2 z-50",
+            "flex items-center justify-center",
+            "h-9 w-9 rounded-full",
+            "bg-black/60 hover:bg-black/80",
+            "text-white",
+            "focus:outline-none focus:ring-2 focus:ring-white/50",
+            "disabled:opacity-40 disabled:cursor-default",
+            className
+        )}
+        {...props}
+    />
+));
+CarouselButton.displayName = "CarouselButton";
 
-export const CarouselPrevious = React.forwardRef(
-    ({ className, ...props }, ref) => {
-        const { scrollPrev, canScrollPrev } = useCarousel();
+/**
+ * Arrows: ALWAYS visible, ALL breakpoints,
+ * pinned to full-screen edges (Netflix-style).
+ */
+const CarouselPrevious = React.forwardRef(({ className, ...props }, ref) => {
+    const { scrollPrev, canScrollPrev } = useCarousel();
 
-        return (
-            <button
-                ref={ref}
-                type="button"
-                onClick={scrollPrev}
-                disabled={!canScrollPrev}
-                className={cn(
-                    "absolute left-2 top-1/2 -translate-y-1/2 z-30 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-40 disabled:cursor-default",
-                    className
-                )}
-                {...props}
-            >
-                <ArrowLeft className="h-4 w-4" />
-            </button>
-        );
-    }
-);
+    return (
+        <CarouselButton
+            ref={ref}
+            onClick={scrollPrev}
+            disabled={!canScrollPrev}
+            className={cn("left-2", className)}
+            {...props}
+        >
+            <ChevronLeft className="h-4 w-4" />
+        </CarouselButton>
+    );
+});
 CarouselPrevious.displayName = "CarouselPrevious";
 
-export const CarouselNext = React.forwardRef(
-    ({ className, ...props }, ref) => {
-        const { scrollNext, canScrollNext } = useCarousel();
+const CarouselNext = React.forwardRef(({ className, ...props }, ref) => {
+    const { scrollNext, canScrollNext } = useCarousel();
 
-        return (
-            <button
-                ref={ref}
-                type="button"
-                onClick={scrollNext}
-                disabled={!canScrollNext}
-                className={cn(
-                    "absolute right-2 top-1/2 -translate-y-1/2 z-30 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-white/50 disabled:opacity-40 disabled:cursor-default",
-                    className
-                )}
-                {...props}
-            >
-                <ArrowRight className="h-4 w-4" />
-            </button>
-        );
-    }
-);
+    return (
+        <CarouselButton
+            ref={ref}
+            onClick={scrollNext}
+            disabled={!canScrollNext}
+            className={cn("right-2", className)}
+            {...props}
+        >
+            <ChevronRight className="h-4 w-4" />
+        </CarouselButton>
+    );
+});
 CarouselNext.displayName = "CarouselNext";
 
-export { Carousel, CarouselContent, CarouselItem };
+export {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselPrevious,
+    CarouselNext,
+};
