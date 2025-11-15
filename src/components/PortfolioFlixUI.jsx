@@ -37,8 +37,8 @@ const Projects = [
             "Built this portfolio Netflix-style...\nNow imagine what I'll build for your company ;)",
         image: myphoto2,
         links: {
-            live: "https://linkedin.com/in/aasthajoshi23",
-            code: "https://github.com/JoshiAastha04/Portfolio-Flix",
+            live: "",
+            code: "https://github.com/JoshiAastha04/",
         },
         featured: true,
     },

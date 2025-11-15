@@ -59,7 +59,7 @@ function AboutPanel({ open, onClose }) {
                                 bringing creative ideas to life through code.
                                 <br />
                                 <br />
-                                I build projects that blend clean design with real functionality—from
+                                I build projects that blend clean design with real functionality from
                                 full-stack web apps to mobile experiences and even small game
                                 projects.
                                 <br />
