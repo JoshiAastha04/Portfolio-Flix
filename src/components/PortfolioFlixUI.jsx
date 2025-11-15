@@ -1,20 +1,18 @@
-import React, { useMemo, useRef, useState } from "react";
-import {
-    ChevronLeft,
-    ChevronRight,
-    Play,
-    Github,
-    ExternalLink,
-    Search,
-    Menu,
-    X,
-    Mail,
-    Linkedin,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useMemo, useState } from "react";
+
+import ProjectCard from "./ProjectCard.jsx";
+import ProjectModal from "./ProjectModal.jsx";
+
+import Header from "./Header.jsx";
+import MobileMenu from "./MobileMenu.jsx";
+import AboutPanel from "./AboutPanel.jsx";
+import Row from "./Row.jsx";
+import Banner from "./Banner.jsx";
+
+import { Search } from "lucide-react";
+
 
 // assets
-import myPhoto from "../../public/me2.png";
 import myphoto2 from "../assets/pic.png";
 import foodblog from "../assets/foodblog.png";
 import airline from "../assets/airline.png";
@@ -27,18 +25,16 @@ import isa from "../assets/isa.png";
 import ecom from "../assets/ecom.png";
 import subdub from "../assets/subdub.png";
 
-/* ================================
-   Projects
-================================== */
-const sampleProjects = [
+//PROJECT DATA
+const Projects = [
     {
         id: "p1",
         title: "Aastha Joshi",
         tags: ["Creative", "Communication", "Leadership"],
         category: "",
         year: 2025,
-        description: "Built this portfolio Netflix-style...\n" +
-            "Now Imagine what I'll build for your company ;)",
+        description:
+            "Built this portfolio Netflix-style...\nNow imagine what I'll build for your company ;)",
         image: myphoto2,
         links: {
             live: "https://linkedin.com/in/aasthajoshi23",
@@ -54,10 +50,10 @@ const sampleProjects = [
         tags: ["HTML", "Tailwind CSS", "AWS"],
         category: "Web",
         description:
-            "Developed a responsive food blog showcasing diverse vegetarian recipes with engaging UI using Tailwind CSS." +
-            "Implemented interactive features for recipe descriptions with JavaScript to enhance user experience." +
-            "Utilized AWS for hosting, ensuring reliable performance and accessibility." +
-            "Employed best practices in web development for clean, maintainable code and user-friendly navigation..",
+            "Developed a responsive food blog showcasing diverse vegetarian recipes with engaging UI using Tailwind CSS. " +
+            "Implemented interactive features for recipe descriptions with JavaScript to enhance user experience. " +
+            "Utilized AWS for hosting, ensuring reliable performance and accessibility. " +
+            "Employed best practices in web development for clean, maintainable code and user-friendly navigation.",
         image: foodblog,
         links: {
             live: "https://s3.us-east-2.amazonaws.com/aasthablog.click/blogindex.html",
@@ -73,9 +69,9 @@ const sampleProjects = [
         tags: ["React", "Node.js", "MongoDB"],
         category: "Web",
         description:
-            "Currently Developing a full-stack e commerce platform with seamless shopping experience, secure payments." +
-            "Integrated Stripe payment gateway for secure transactions." +
-            "Utilizing mongodb for efficient product and user data management and Node.js for backend Services.",
+            "Currently developing a full-stack e-commerce platform with seamless shopping experience and secure payments. " +
+            "Integrated Stripe payment gateway for secure transactions. " +
+            "Utilizing MongoDB for efficient product and user data management and Node.js for backend services.",
         image: ecom,
         links: {
             live: "",
@@ -91,9 +87,9 @@ const sampleProjects = [
         tags: ["Mobile", "Flutter"],
         category: "Mobile",
         description:
-            "BeReal-style task check-ins with selfies, chat, and coin rewards." +
-            "Developed a Flask backend API for social media platform designed for ADHD users, supporting user auth, task based posts and reactions." +
-            "Integrated bcrypt password hashing for auth and stored images in static folder, serving them via API endpoints.",
+            "BeReal-style task check-ins with selfies, chat, and coin rewards. " +
+            "Developed a Flask backend API for a social media platform designed for ADHD users, supporting user auth, task-based posts and reactions. " +
+            "Integrated bcrypt password hashing for auth and served images via API endpoints.",
         image: adhdapp,
         links: { code: "https://github.com/babyzibaa/FKFA2" },
         featured: false,
@@ -106,10 +102,8 @@ const sampleProjects = [
         tags: ["FastAPI", "PostgreSQL", "Next.js"],
         category: "Web",
         description:
-            "Engineering a full encrypted data collection tool using FastAPI(Python), secured with AES encryption and\n" +
-            "role-based access to enure HIPAA compliance.\n" +
-            "Developing an user-friendly frontend components using React.js, ensuring accessibility and responsiveness across\n" +
-            "devices.",
+            "Engineering a fully encrypted data collection tool using FastAPI (Python), secured with AES encryption and " +
+            "role-based access to ensure HIPAA compliance. Developing user-friendly frontend components using React/Next.js.",
         image: studyplatform,
         links: { code: "https://github.com/cfd-summer-internship" },
         featured: true,
@@ -119,12 +113,11 @@ const sampleProjects = [
         title: "Elev8",
         subtitle: "Group Project",
         year: 2025,
-        tags: ["Godot", "GDScript", "json"],
+        tags: ["Godot", "GDScript", "JSON"],
         category: "Game",
         description:
-            "Mini Game engine with Seamless UI to make it easy for users to get started in their platformer developing journey." +
-            "Used Godot and GdScript to build the UI, load level, and demo level." +
-            "All the changes made in level editor is saved locally.",
+            "Mini game engine with seamless UI to make it easy for users to get started in their platformer journey. " +
+            "Built in Godot + GDScript with level editing, saving, and a demo level.",
         image: leveleditor,
         links: { code: "https://github.com/amyktruongdev/Elev8" },
         featured: false,
@@ -150,11 +143,10 @@ const sampleProjects = [
         tags: ["Spring Boot", "JSP", "Postgres"],
         category: "Web",
         description:
-            "Developed a full-stack flight reservation system using JSP for a dynamic user interface and Spring Boot(Java) for backend services." +
-            "Implementing RESTful APIs for seamless communication between frontend and backend using JSON," +
-            "ensuring real-time flight search and booking capabilities." +
-            "PostgreSQL database to manage user accounts, flight data, and booking transactions effectively." +
-            "Integrated secure user authentication with JWT tokens, allowing users to manage their bookings safely and efficiently.",
+            "Developed a full-stack flight reservation system using JSP for dynamic UI and Spring Boot for backend services. " +
+            "Implemented RESTful APIs for real-time flight search and booking. " +
+            "Used PostgreSQL to manage user accounts, flight data, and booking transactions. " +
+            "Integrated JWT-based auth so users can safely manage their bookings.",
         image: airline,
         links: { code: "https://github.com/MSantoscoy/MITA-projDev" },
         featured: false,
@@ -164,9 +156,9 @@ const sampleProjects = [
         title: "ACM",
         subtitle: "Vice President",
         year: 2023,
-        tags: ["TeamWork", "Willing to Adapt", "Problem Solving"],
+        tags: ["Teamwork", "Willing to Adapt", "Problem Solving"],
         category: "extracurricular",
-        description: "Organised Events like Leetcode Workshop to help students",
+        description: "Organised events like LeetCode workshops to help students grow in problem solving.",
         image: acm,
         links: { live: "#" },
         featured: false,
@@ -176,11 +168,11 @@ const sampleProjects = [
         title: "ISA",
         subtitle: "Secretary",
         year: 2024,
-        tags: ["Leadership", "Collaboration", "Accountabilty"],
+        tags: ["Leadership", "Collaboration", "Accountability"],
         category: "extracurricular",
         description:
-            "Organised events to promote Indian Culture and build a community." +
-            "Cultural events made students feel like home away from home.",
+            "Organised events to promote Indian culture and build a community. " +
+            "Cultural events helped students feel at home away from home.",
         image: isa,
         links: { live: "#" },
         featured: false,
@@ -190,496 +182,18 @@ const sampleProjects = [
         title: "Subscription Tracker",
         subtitle: "Personal Project",
         year: 2024,
-        tags: ["Node.js", "MongoDb", "NodeMailer", "express.js"],
+        tags: ["Node.js", "MongoDB", "NodeMailer", "Express.js"],
         category: "backend",
         description:
-            "JWT-based authentication system with secure user login and signup. RESTful APIs for managing users, subscriptions, billing cycles, and payments" +
-            "Automated email notifications for subscription renewals and payment reminders" +
-            "Postman-tested API collection for robust and consistent endpoint testing" +
-            "Scalable database schema using MongoDB, optimized for recurring subscriptions",
+            "JWT-based auth with secure login/signup. RESTful APIs for users, subscriptions, billing cycles, and payments. " +
+            "Automated email notifications for renewals and reminders. " +
+            "Postman-tested endpoints and a scalable MongoDB schema for recurring subscriptions.",
         image: subdub,
         links: { code: "https://github.com/JoshiAastha04/Subscription_tracker" },
         featured: false,
     },
 ];
 
-/* ================================
-   REUSABLE UI
-================================== */
-function ProjectCard({ project, onOpen }) {
-    const tagsSafe = Array.isArray(project.tags) ? project.tags : [];
-    return (
-        <motion.button
-            layout
-            onClick={() => onOpen(project)}
-            className="group relative aspect-video w-[70vw] sm:w-[44vw] md:w-[24vw] lg:w-[18vw] xl:w-[16vw] 2xl:w-[14vw] shrink-0 overflow-hidden rounded-2xl bg-[#232323]"
-            whileHover={{ scale: 1.05, y: -4 }}
-            transition={{ type: "spring", stiffness: 280, damping: 22 }}
-        >
-            <img
-                src={project.image}
-                alt={project.title}
-                className="h-full w-full object-cover"
-            />
-
-            <div className="pointer-events-none absolute left-2 top-2 rounded-full bg-black/70 px-2 py-0.5 text-[10px] font-medium text-white">
-                {project.year}
-            </div>
-
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                <div className="flex items-center gap-2">
-          <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white">
-            {project.category}
-          </span>
-                    {tagsSafe.slice(0, 2).map((t) => (
-                        <span
-                            key={t}
-                            className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-white"
-                        >
-              {t}
-            </span>
-                    ))}
-                </div>
-                <h4 className="mt-1 line-clamp-1 text-left text-sm font-semibold text-white">
-                    {project.title}
-                </h4>
-                <p className="line-clamp-1 text-left text-[11px] text-white/70">
-                    {project.subtitle}
-                </p>
-            </div>
-        </motion.button>
-    );
-}
-
-function Row({ title, items, onOpen }) {
-    if (!items?.length) return null;
-
-    return (
-        <section className="py-6">
-            {/* Row title */}
-            <div className="px-4 md:px-8">
-                <h3 className="text-2xl md:text-3xl font-semibold text-white">
-                    {title}
-                </h3>
-            </div>
-
-
-            {/* Scrollable row  */}
-            <div
-                className="
-                    mt-2
-                    flex
-                    gap-3
-                    overflow-x-auto
-                    overflow-y-hidden
-                    px-4 md:px-8
-                    scrollbar-none
-                "
-            >
-                {items.map((p) => (
-                    <div key={p.id} className="flex-row w-30">
-                    <ProjectCard key={p.id} project={p} onOpen={onOpen} />
-                        </div>
-                ))}
-            </div>
-        </section>
-    );
-}
-
-function ProjectModal({ open, onClose, project }) {
-    return (
-        <AnimatePresence>
-            {open && project && (
-                <motion.div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                >
-                    <motion.div
-                        className="w-full max-w-3xl overflow-hidden rounded-2xl bg-[#111] ring-1 ring-white/10"
-                        initial={{ scale: 0.95, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.95, opacity: 0 }}
-                    >
-                        {/* image banner */}
-                        <div className="relative aspect-video w-full">
-                            <img
-                                src={project.image}
-                                alt={project.title}
-                                className="h-full w-full object-cover"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
-                            <div className="absolute bottom-3 left-3 flex flex-wrap items-center gap-2">
-                                <button className="inline-flex items-center gap-2 rounded-xl bg-white/95 px-3 py-1.5 text-sm font-semibold text-black hover:bg-white">
-                                    <Play className="h-4 w-4" /> Preview
-                                </button>
-                                {project.links.code && (
-                                    <a
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        href={project.links.code}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/20"
-                                    >
-                                        <Github className="h-4 w-4" /> Code
-                                    </a>
-                                )}
-                                {project.links.live && (
-                                    <a
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        href={project.links.live}
-                                        className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/20"
-                                    >
-                                        <ExternalLink className="h-4 w-4" /> Live
-                                    </a>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* content */}
-                        <div className="space-y-3 p-5">
-                            <div className="flex flex-wrap items-center justify-between gap-3">
-                                <div>
-                                    <h3 className="text-lg font-bold text-white md:text-xl">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-xs text-white/70 md:text-sm">
-                                        {project.subtitle}
-                                    </p>
-                                </div>
-                                <div className="flex flex-wrap items-center gap-2 text-[11px] text-white/80">
-                  <span className="rounded bg-white/10 px-2 py-0.5">
-                    {project.category}
-                  </span>
-                                    {(project.tags || []).map((t) => (
-                                        <span
-                                            key={t}
-                                            className="rounded bg-white/10 px-2 py-0.5"
-                                        >
-                      {t}
-                    </span>
-                                    ))}
-                                </div>
-                            </div>
-                            <p className="text-xs leading-6 text-white/80 md:text-sm">
-                                {project.description}
-                            </p>
-                        </div>
-
-                        <div className="flex justify-end gap-3 border-t border-white/10 p-4">
-                            <button
-                                onClick={onClose}
-                                className="rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20"
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </motion.div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
-}
-
-function Banner({ project, onOpen }) {
-    if (!project) return null;
-    return (
-        <section
-            id="hero"
-            className="relative h-[52vh] md:h-[60vh] w-full overflow-hidden rounded-b-3xl bg-[#0b0b0b]"
-        >
-            <img
-                src={project.image}
-                alt={project.title}
-                className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b0b0b] via-[#0b0b0b]/40 to-transparent" />
-
-            {/* text overlay */}
-            <div className="relative z-10 mx-auto flex h-full w-full max-w-[100rem] flex-col justify-end px-4 pb-8 md:px-10 md:pb-10">
-                <h2 className="max-w-2xl text-2xl font-black tracking-tight text-white sm:text-3xl md:text-5xl">
-                    {project.title}
-                </h2>
-                <p className="text-white/80 whitespace-pre-line leading-snug text-base md:text-lg">
-                    {project.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-3">
-                    <button
-                        onClick={() => onOpen(project)}
-                        className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-2 text-xs font-semibold text-black hover:bg:white/90 sm:text-sm"
-                    >
-                        <Play className="h-4 w-4" /> Open
-                    </button>
-                    {project.links.code && (
-                        <a
-                            href={project.links.code}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-2 rounded-2xl bg-white/10 px-4 py-2 text-xs font-semibold text-white hover:bg-white/20 sm:text-sm"
-                        >
-                            <Github className="h-4 w-4" /> View Code
-                        </a>
-                    )}
-                </div>
-            </div>
-        </section>
-    );
-}
-
-/* ================================
-   HEADER + MOBILE MENU
-================================== */
-function Header({ onToggleMobile, mobileOpen, onToggleAbout, query, setQuery }) {
-    return (
-        <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-[#0b0b0b] to-transparent shadow-lg shadow-black/20 px-2 py-2 md:px-4 md:py-3">
-            <div className="mx-auto flex w-full items-center justify-between px-2 md:px-4">
-                <div className="flex items-center gap-3">
-                    <button
-                        className="md:hidden"
-                        onClick={onToggleMobile}
-                        aria-label="Toggle menu"
-                    >
-                        {mobileOpen ? (
-                            <X className="h-6 w-6 text-white" />
-                        ) : (
-                            <Menu className="h-6 w-6 text-white" />
-                        )}
-                    </button>
-
-                    <div className="text-lg font-black tracking-tight text-white md:text-2xl">
-                        <span className="text-red-600">Aastha Joshi</span>
-                    </div>
-
-                    <nav className="hidden gap-6 text-sm font-medium text-white/80 md:flex">
-                        <a className="hover:text:white" href="#hero">
-                            Featured
-                        </a>
-                        <a className="hover:text:white" href="#web">
-                            Web Apps
-                        </a>
-                        <a className="hover:text:white" href="#mobile">
-                            Mobile
-                        </a>
-                        <a className="hover:text:white" href="#game">
-                            Game Dev
-                        </a>
-                        <a className="hover:text:white" href="#extracurricular">
-                            Extracurricular
-                        </a>
-                        <a className="hover:text:white" href="#backend">
-                            Backend
-                        </a>
-                        <button onClick={onToggleAbout} className="hover:text:white">
-                            About
-                        </button>
-                    </nav>
-                </div>
-
-                <div className="flex items-center gap-3">
-                    <div className="relative hidden items-center md:flex">
-                        <Search className="absolute left-2 h-4 w-4 text-white/50" />
-                        <input
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search projects"
-                            className="w-52 rounded-xl bg:white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring:white/30"
-                        />
-                    </div>
-
-                    <button
-                        onClick={onToggleAbout}
-                        className="h-8 w-8 rounded-full overflow-hidden border border-white/20"
-                    >
-                        <img
-                            src="/me2.png"
-                            alt="Profile"
-                            className="h-full w-full object-cover"
-                        />
-                    </button>
-
-                </div>
-            </div>
-        </header>
-    );
-}
-
-function MobileMenu({ open, onToggleAbout }) {
-    return (
-        <AnimatePresence>
-            {open && (
-                <motion.nav
-                    className="md:hidden"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                >
-                    <div className="space-y-2 bg-black/60 px-4 pb-4 pt-2 text-white backdrop-blur">
-                        <a className="block" href="#hero">
-                            Featured
-                        </a>
-                        <a className="block" href="#web">
-                            Web Apps
-                        </a>
-                        <a className="block" href="#mobile">
-                            Mobile
-                        </a>
-                        <a className="block" href="#game">
-                            Game Dev
-                        </a>
-                        <a className="block" href="#extracurricular">
-                            Extracurricular
-                        </a>
-                        <a className="block" href="#backend">
-                            Backend
-                        </a>
-                        <button onClick={onToggleAbout} className="block w-full text-left">
-                            About
-                        </button>
-                    </div>
-                </motion.nav>
-            )}
-        </AnimatePresence>
-    );
-}
-
-/* ================================
-   ABOUT SIDE PANEL
-================================== */
-function AboutPanel({ open, onClose }) {
-    return (
-        <AnimatePresence>
-            {open && (
-                <motion.div
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="About Me"
-                    className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-sm"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={onClose}
-                >
-                    <motion.aside
-                        className="h-full w-full sm:w-96 bg-[#111] text-white shadow-[0_0_40px_rgba(0,0,0,0.6)] ring-1 ring-white/10 p-6 flex flex-col"
-                        initial={{ x: "100%" }}
-                        animate={{ x: 0 }}
-                        exit={{ x: "100%" }}
-                        transition={{ type: "spring", stiffness: 140, damping: 18 }}
-                        onClick={(e) => e.stopPropagation()}
-                        onKeyDown={(e) => e.key === "Escape" && onClose()}
-                        tabIndex={-1}
-                    >
-                        <div className="flex items-center justify-between">
-                            <h3 className="text-lg font-bold tracking-tight">About Me</h3>
-                            <button
-                                onClick={onClose}
-                                className="rounded-md bg-white/10 p-1.5 hover:bg:white/20"
-                                aria-label="Close About panel"
-                            >
-                                <X className="h-5 w-5" />
-                            </button>
-                        </div>
-
-                        <div className="mt-4 flex flex-col items-center text-center">
-                            <div className="relative">
-                                <img
-                                    src={myPhoto}
-                                    alt="Aastha Joshi"
-                                    className="h-25 w-25 rounded-full ring-2 ring:white/20 object-cover"
-                                />
-                                <div className="absolute inset-0 rounded-full bg-gradient-to-br opacity-70 animate-pulse" />
-                            </div>
-
-                            <h4 className="mt-2 text-white font-semibold text-base">
-                                Aastha Joshi
-                            </h4>
-                            <p className="mt-1 text-xs text-white/60">
-                                Full-Stack Developer
-                            </p>
-                        </div>
-
-                        <div className="mt-4 space-y-4 text-sm text-white/80">
-                            <p className="leading-6 text-xs sm:text-sm">
-                                Hiee! I’m Aastha Joshi, a Senior Comp Sci student at Cal State Northridge and a passionate Full Stack Developer who loves bringing creative ideas to life through code.
-                                <br /><br />
-                                I build projects that blend clean design with real functionality from full-stack web apps to mobile experiences and even small game projects.
-                                <br /><br />
-                                I’m also growing my cloud skills with AWS and staying active in leadership as the VP of ACM and Secretary of ISA.
-                                <br /><br />
-                                For me, development is about creating digital experiences that connect, inspire, and make an impact.
-                            </p>
-
-                            <div className="flex flex-wrap gap-2">
-                                {[
-                                    "HTML/CSS (Tailwind)",
-                                    "Javascript",
-                                    "React.js",
-                                    "Spring Boot(Java)",
-                                    "FastAPI(Python)",
-                                    "PostgreSQL",
-                                    "MongoDB",
-                                ].map((t) => (
-                                    <span
-                                        key={t}
-                                        className="rounded-full bg-white/10 px-3 py-1 text-xs"
-                                    >
-                    {t}
-                  </span>
-                                ))}
-                            </div>
-
-                            <div className="mt-2 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
-                                <a
-                                    href="https://github.com/joshiaastha04"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
-                                >
-                                    <Github className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text:white">
-                    GitHub
-                  </span>
-                                </a>
-                                <a
-                                    href="https://linkedin.com/in/aasthajoshi23"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
-                                >
-                                    <Linkedin className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text:white">
-                    LinkedIn
-                  </span>
-                                </a>
-                                <a
-                                    href="mailto:aasthajoshi3010@gmail.com"
-                                    className="group flex flex-col items-center gap-1 rounded-xl bg-white/5 p-3 hover:bg:white/10"
-                                >
-                                    <Mail className="h-5 w-5" />
-                                    <span className="text-xs text-white/80 group-hover:text:white">
-                    Email
-                  </span>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="mt-auto flex items-center justify-between border-t border:white/10 pt-4">
-              <span className="text-xs text-white/50">
-                © {new Date().getFullYear()} Aastha Joshi
-              </span>
-                            <button className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-semibold hover:bg:white/20">
-                                Close
-                            </button>
-                        </div>
-                    </motion.aside>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
-}
 
 /* ================================
    MAIN PAGE
@@ -691,39 +205,40 @@ export default function PortfolioNetflixUI() {
     const [modalOpen, setModalOpen] = useState(false);
     const [aboutOpen, setAboutOpen] = useState(false);
 
-    // pick the newest featured project (by year)
+    // pick the newest featured project
     const featuredProject = useMemo(() => {
-        const feats = sampleProjects.filter((p) => p.featured);
+        const feats = Projects.filter((p) => p.featured);
         if (!feats.length) return null;
         return feats.reduce((a, b) => (a.year >= b.year ? a : b));
     }, []);
 
     const filtered = useMemo(() => {
         const q = query.trim().toLowerCase();
-        if (!q) return sampleProjects;
-        return sampleProjects.filter(
-            (p) =>
-                p.title.toLowerCase().includes(q) ||
-                p.subtitle?.toLowerCase().includes(q) ||
-                (Array.isArray(p.tags) &&
-                    p.tags.join(" ").toLowerCase().includes(q))
-        );
+        if (!q) return Projects;
+        return Projects.filter((p) => {
+            const inTitle = p.title.toLowerCase().includes(q);
+            const inSubtitle = p.subtitle?.toLowerCase().includes(q);
+            const inTags =
+                Array.isArray(p.tags) &&
+                p.tags.join(" ").toLowerCase().includes(q);
+
+            return inTitle || inSubtitle || inTags;
+        });
     }, [query]);
 
-    // rows: exclusive buckets (no duplicates across rows)
     const rows = useMemo(() => {
         const list = Array.isArray(filtered) ? filtered : [];
 
-        const uniqueAll = Array.from(
-            new Map(list.map((p) => [p.id, p])).values()
-        );
+        const uniqueAll = Array.from(new Map(list.map((p) => [p.id, p])).values());
 
-        const featured        = list.filter((p) => p.featured);
-        const web             = list.filter((p) => p.category === "Web");
-        const mobile          = list.filter((p) => p.category === "Mobile");
-        const game            = list.filter((p) => p.category === "Game");
-        const backend         = list.filter((p) => p.category === "backend");
-        const extracurricular = list.filter((p) => p.category === "extracurricular");
+        const featured = list.filter((p) => p.featured);
+        const web = list.filter((p) => p.category === "Web");
+        const mobile = list.filter((p) => p.category === "Mobile");
+        const game = list.filter((p) => p.category === "Game");
+        const backend = list.filter((p) => p.category === "backend");
+        const extracurricular = list.filter(
+            (p) => p.category === "extracurricular"
+        );
 
         return [
             { id: "featured", title: "Featured Projects", items: featured },
@@ -741,85 +256,95 @@ export default function PortfolioNetflixUI() {
         setModalOpen(true);
     };
 
+    const closeProject = () => {
+        setModalOpen(false);
+        setActiveProject(null);
+    };
+
     return (
-        <div className="min-h-screen bg-[#0b0b0b] text-white overflow-x-hidden">
-            <Header
-                onToggleMobile={() => setMobileOpen((v) => !v)}
-                mobileOpen={mobileOpen}
-                onToggleAbout={() => setAboutOpen(true)}
-                query={query}
-                setQuery={setQuery}
-            />
-            <MobileMenu
-                open={mobileOpen}
-                onToggleAbout={() => setAboutOpen(true)}
-            />
+        <main className="min-h-screen bg-[#0b0b0b] text-white">
+            <div className="mx-auto max-w-6xl overflow-x-hidden">
+                <Header
+                    onToggleMobile={() => setMobileOpen((v) => !v)}
+                    mobileOpen={mobileOpen}
+                    onToggleAbout={() => setAboutOpen(true)}
+                    query={query}
+                    setQuery={setQuery}
+                />
 
-            {/* mobile search */}
-            <div className="mx-auto mt-2 block w-full px-4 md:hidden">
-                <div className="relative">
-                    <Search className="absolute left-2 h-4 w-4 text-white/50" />
-                    <input
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Search projects"
-                        className="w-full rounded-xl bg-white/10 pl-8 pr-3 py-2 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring:white/30"
-                    />
+                <MobileMenu
+                    open={mobileOpen}
+                    onToggleAbout={() => setAboutOpen(true)}
+                />
+
+                {/* mobile search */}
+                <div className="mx-auto mt-2 block w-full px-4 md:hidden">
+                    <div className="relative">
+                        <Search className="absolute left-2 h-4 w-4 text-white/50" />
+                        <input
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search projects"
+                            className="w-full rounded-xl bg-white/10 px-8 py-2 pr-3 text-sm text-white placeholder:text-white/50 outline-none focus:ring-2 focus:ring-white/30"
+                        />
+                    </div>
                 </div>
-            </div>
 
-            {/* hero banner*/}
-            <Banner project={featuredProject} onOpen={openProject} />
+                {/* hero banner */}
+                <Banner project={featuredProject} onOpen={openProject} />
 
-            {/* rows */}
-            <main className="mt-4 grid w-full gap-8 pb-10">
-                {rows.map((row) => (
-                    <div key={row.id} id={row.id} className="px-0 scroll-mt-24">
-                        <Row title={row.title} items={row.items} onOpen={openProject} />
-                    </div>
-                ))}
-            </main>
-
-            {/* footer */}
-            <section className="mt-4 w-full px-6 md:px-10">
-                <footer className="mt-2 flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs text-white/60 md:flex-row md:text-sm">
-                    <div>© {new Date().getFullYear()} Aastha Joshi</div>
-                    <div className="flex items-center gap-4">
-                        <a
-                            href="https://github.com/joshiaastha04"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text:white"
+                {/* rows */}
+                <section className="mt-4 grid w-full gap-8 pb-10">
+                    {rows.map((row) => (
+                        <div
+                            key={row.id}
+                            id={row.id}
+                            className="px-0 scroll-mt-24"
                         >
-                            GitHub
-                        </a>
-                        <a
-                            href="https://linkedin.com/in/aasthajoshi23"
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text:white"
-                        >
-                            LinkedIn
-                        </a>
-                        <a
-                            href="mailto:aasthajoshi3010@gmail.com"
-                            className="hover:text:white"
-                        >
-                            Email
-                        </a>
-                    </div>
-                </footer>
-            </section>
+                            <Row title={row.title} items={row.items} onOpen={openProject} />
+                        </div>
+                    ))}
+                </section>
 
-            {/* panels & modals */}
-            <>
+                {/* footer */}
+                <section className="mt-4 w-full px-6 md:px-10">
+                    <footer className="mt-2 flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs text-white/60 md:flex-row md:text-sm">
+                        <div>© {new Date().getFullYear()} Aastha Joshi</div>
+                        <div className="flex items-center gap-4">
+                            <a
+                                href="https://github.com/joshiaastha04"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:text-white"
+                            >
+                                GitHub
+                            </a>
+                            <a
+                                href="https://linkedin.com/in/aasthajoshi23"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:text-white"
+                            >
+                                LinkedIn
+                            </a>
+                            <a
+                                href="mailto:aasthajoshi3010@gmail.com"
+                                className="hover:text-white"
+                            >
+                                Email
+                            </a>
+                        </div>
+                    </footer>
+                </section>
+
+                {/* About & Project modal */}
                 <AboutPanel open={aboutOpen} onClose={() => setAboutOpen(false)} />
                 <ProjectModal
                     open={modalOpen}
-                    onClose={() => setModalOpen(false)}
                     project={activeProject}
+                    onClose={closeProject}
                 />
-            </>
-        </div>
+            </div>
+        </main>
     );
 }

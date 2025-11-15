@@ -1,25 +1,24 @@
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
+const MotionButton = Motion.button;
 function ProjectCard({ project, onOpen }) {
     const tagsSafe = Array.isArray(project.tags) ? project.tags : [];
 
     return (
-        <motion.button
+        <Motion.button
             layout
             onClick={() => onOpen(project)}
-            className="
-                group
-                relative
-                shrink-0
-                min-w-[210px]
-                max-w-[230px]
-                md:min-w-[230px]
-                md:max-w-[260px]
-                overflow-hidden
-                rounded-2xl
-                bg-[#232323]
-                text-left
+            className="group relative
+            aspect-video
+            w-full
+            max-w-[360px]
+            mx-auto
+            overflow-hidden
+            rounded-2xl
+            bg-[#232323]
             "
+            whileHover={{ scale: 1.05, y: -4 }}
+            transition={{ type: 'spring', stiffness: 280, damping: 22 }}
         >
             {/* image area */}
             <div className="relative aspect-video w-full overflow-hidden">
@@ -52,7 +51,7 @@ function ProjectCard({ project, onOpen }) {
                     {project.subtitle}
                 </p>
             </div>
-        </motion.button>
+        </Motion.button>
     );
 }
 

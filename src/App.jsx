@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import PortfolioFlixUI from "./components/PortfolioFlixUI";
 import tadum from "./assets/tadumAudiio.m4a";
 
-// =======================
-// MAIN APP
-// =======================
 
+// MAIN APP
 export default function App() {
     const [showIntro, setShowIntro] = useState(true);
 
@@ -16,10 +14,8 @@ export default function App() {
     );
 }
 
-// =======================
-// NETFLIX-STYLE INTRO
-// =======================
 
+// NETFLIX-STYLE INTRO
 function Intro({ onFinish }) {
     const [step, setStep] = useState(0);
     const [soundEnabled, setSoundEnabled] = useState(false);
@@ -110,7 +106,7 @@ function Intro({ onFinish }) {
 
             </div>
 
-            {/* TAP TO ENABLE SOUND MESSAGE */}
+            {/* message */}
             {!soundEnabled && (
                 <div
                     className="absolute bottom-30 left-1/2 -translate-x-1/2

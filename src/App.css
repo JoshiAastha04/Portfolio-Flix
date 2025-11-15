@@ -1,8 +1,6 @@
-/* RESET VITE DEFAULTS */
-#root {
+body {
   margin: 0;
-  padding: 0;
-  width: 100%;
-  max-width: 100%;
-  text-align: left;
+  background: #141414;
+  color: white;
+  overflow-x: hidden;
 }
