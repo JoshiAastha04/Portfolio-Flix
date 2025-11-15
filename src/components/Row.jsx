@@ -77,12 +77,12 @@ export default function Row({ title, items, onOpen }) {
                                 className="
                   shrink-0
                   snap-start
-                  basis-[25%]    /* mobile: 4 per view (change if you want fewer) */
-                  sm:basis-[30%]
-                  md:basis-[30%]
-                  lg:basis-[28%]
-                  xl:basis-[22%]
-                  2xl:basis-[18%]
+                  basis-[45%]
+                  sm:basis-[35%]
+                  md:basis-[35%]
+                  lg:basis-[32%]
+                  xl:basis-[25%]
+                  2xl:basis-[28%]
                 "
                             >
                                 <ProjectCard
