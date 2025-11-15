@@ -1,51 +1,83 @@
 import React from "react";
+import ProjectCard from "./ProjectCard.jsx";
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
 } from "@/components/ui/carousel.jsx";
-import ProjectCard from "@/components/ProjectCard.jsx";
 
-function Row({ title, items, onOpen }) {
-    if (!items || !items.length) return null;
+export default function Row({ title, items, onOpen }) {
+    if (!items || items.length === 0) return null;
 
     return (
-        <section className="py-6 w-full relative">
+        <section className="py-6 px-4 md:px-8">
             {/* Row title */}
-            <div className="max-w-6xl mx-auto px-4 md:px-8">
-                <h3 className="text-2xl md:text-3xl font-semibold text-white">
-                    {title}
-                </h3>
-            </div>
+            <h2 className="text-lg md:text-2xl font-bold mb-3 text-white">
+                {title}
+            </h2>
 
-            {/* Netflix-style carousel row */}
-            <div className="mt-2 max-w-6xl mx-auto px-4 md:px-8 relative">
-                {/* Right fade so user sees there is more */}
+            <div className="relative">
+                {/* LEFT ARROW (visual only) */}
+                <div
+                    className="
+            hidden md:flex
+            absolute
+            left-0 top-1/2 -translate-y-1/2
+            z-10
+          "
+                >
+                    <div
+                        className="
+              px-2 py-8
+              bg-black/40 hover:bg-black/60
+              text-white rounded-r-lg select-none
+            "
+                    >
+                        ‹
+                    </div>
+                </div>
+
+                {/* RIGHT ARROW (visual only) */}
+                <div
+                    className="
+            hidden md:flex
+            absolute
+            right-0 top-1/2 -translate-y-1/2
+            z-10
+          "
+                >
+                    <div
+                        className="
+              px-2 py-8
+              bg-black/40 hover:bg-black/60
+              text-white rounded-l-lg select-none
+            "
+                    >
+                        ›
+                    </div>
+                </div>
+
+                {/* FADE INDICATOR ON RIGHT */}
                 <div
                     className="
             pointer-events-none
-            absolute right-0 top-0 h-full w-24
+            absolute right-0 top-0
+            h-full w-28
             bg-gradient-to-l from-[#0b0b0b] to-transparent
-            z-20
+            z-5
           "
                 />
 
-                <Carousel
-                    opts={{
-                        align: "start",
-                        dragFree: true,
-                    }}
-                    className="w-full group"
-                >
+                {/* Horizontal scrollable row using Carousel */}
+                <Carousel>
                     <CarouselContent>
-                        {items.map((p) => (
+                        {items.map((item) => (
                             <CarouselItem
-                                key={p.id}
+                                key={item.id}
                                 className="
+                  shrink-0
                   snap-start
-                  basis-[25%]    /* mobile: only 1 + peek of next */
+                  basis-[25%]    /* mobile: 4 per view (change if you want fewer) */
                   sm:basis-[30%]
                   md:basis-[30%]
                   lg:basis-[28%]
@@ -53,18 +85,15 @@ function Row({ title, items, onOpen }) {
                   2xl:basis-[18%]
                 "
                             >
-                                <ProjectCard project={p} onOpen={onOpen} />
+                                <ProjectCard
+                                    project={item}
+                                    onOpen={() => onOpen(item)}
+                                />
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-
-                    {/* Use default Netflix-style arrows (fixed to screen) */}
-                    <CarouselPrevious />
-                    <CarouselNext />
                 </Carousel>
             </div>
         </section>
     );
 }
-
-export default Row;

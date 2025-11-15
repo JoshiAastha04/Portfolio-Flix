@@ -1,57 +1,73 @@
-import { motion as Motion } from "framer-motion";
+// src/components/ProjectCard.jsx
+import React from "react";
 
-const MotionButton = Motion.button;
 function ProjectCard({ project, onOpen }) {
-    const tagsSafe = Array.isArray(project.tags) ? project.tags : [];
+    const { title, tags = [], year, image } = project;
 
     return (
-        <Motion.button
-            layout
+        <button
+            type="button"
             onClick={() => onOpen(project)}
-            className="group relative
-            aspect-video
-            w-full
-            max-w-[360px]
-            mx-auto
-            overflow-hidden
-            rounded-2xl
-            bg-[#232323]
-            "
-            whileHover={{ scale: 1.05, y: -4 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 22 }}
+            className="
+        group relative block w-full overflow-hidden rounded-2xl
+        bg-zinc-900 text-left shadow-lg
+        transition-transform duration-300
+        hover:-translate-y-1 hover:shadow-2xl
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70
+      "
         >
-            {/* image area */}
-            <div className="relative aspect-video w-full overflow-hidden">
-                {project.image && (
+            <div className="relative aspect-[16/9] w-full">
+                {image && (
                     <img
-                        src={project.image}
-                        alt={project.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        src={image}
+                        alt={title}
+                        className="
+              h-full w-full object-cover
+              transition-transform duration-300
+              group-hover:scale-105
+            "
                     />
                 )}
 
-            </div>
+                {/* Year pill: always visible */}
+                {year && (
+                    <span
+                        className="
+              absolute left-3 top-3
+              rounded-full bg-black/75 px-2.5 py-1
+              text-[11px] font-semibold text-white
+              backdrop-blur
+            "
+                    >
+            {year}
+          </span>
+                )}
 
-            {/* text area */}
-            <div className="p-3">
-                <div className="flex flex-wrap gap-0">
-                    {tagsSafe.map((tag) => (
-                        <span
-                            key={tag}
-                            className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/80"
-                        >
-                            {tag}
-                        </span>
-                    ))}
+                {/* Hover overlay – ONLY this card because the group is on this button */}
+                <div
+                    className="
+            absolute inset-0
+            flex flex-col justify-end
+            bg-gradient-to-t from-black/80 via-black/40 to-transparent
+            opacity-0
+            transition-opacity duration-300
+            group-hover:opacity-100
+          "
+                >
+                    <div className="p-3 sm:p-4">
+                        <h4 className="text-sm sm:text-base font-semibold text-white">
+                            {title}
+                        </h4>
+
+                        {tags.length > 0 && (
+                            <p className="mt-1 text-[10px] sm:text-xs text-white/80 line-clamp-2">
+                                {tags.join(" • ")}
+                            </p>
+                        )}
+                    </div>
                 </div>
-                <h4 className="mt-1 line-clamp-1 text-left text-sm font-semibold text-white">
-                    {project.title}
-                </h4>
-                <p className="line-clamp-1 text-left text-[11px] text-white/70">
-                    {project.subtitle}
-                </p>
             </div>
-        </Motion.button>
+        </button>
     );
 }
 
