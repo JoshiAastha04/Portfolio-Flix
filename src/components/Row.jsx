@@ -16,58 +16,6 @@ export default function Row({ title, items, onOpen }) {
                 {title}
             </h2>
 
-            <div className="relative">
-                {/* LEFT ARROW (visual only) */}
-                <div
-                    className="
-            hidden md:flex
-            absolute
-            left-0 top-1/2 -translate-y-1/2
-            z-10
-          "
-                >
-                    <div
-                        className="
-              px-2 py-8
-              bg-black/40 hover:bg-black/60
-              text-white rounded-r-lg select-none
-            "
-                    >
-                        ‹
-                    </div>
-                </div>
-
-                {/* RIGHT ARROW (visual only) */}
-                <div
-                    className="
-            hidden md:flex
-            absolute
-            right-0 top-1/2 -translate-y-1/2
-            z-10
-          "
-                >
-                    <div
-                        className="
-              px-2 py-8
-              bg-black/40 hover:bg-black/60
-              text-white rounded-l-lg select-none
-            "
-                    >
-                        ›
-                    </div>
-                </div>
-
-                {/* FADE INDICATOR ON RIGHT */}
-                <div
-                    className="
-            pointer-events-none
-            absolute right-0 top-0
-            h-full w-28
-            bg-gradient-to-l from-[#0b0b0b] to-transparent
-            z-5
-          "
-                />
-
                 {/* Horizontal scrollable row using Carousel */}
                 <Carousel>
                     <CarouselContent>
@@ -93,7 +41,7 @@ export default function Row({ title, items, onOpen }) {
                         ))}
                     </CarouselContent>
                 </Carousel>
-            </div>
+            {/*</div>*/}
         </section>
     );
 }

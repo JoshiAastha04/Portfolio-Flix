@@ -24,6 +24,7 @@ import acm from "../assets/ACM.png";
 import isa from "../assets/isa.png";
 import ecom from "../assets/ecom.png";
 import subdub from "../assets/subdub.png";
+import pet from "../assets/pet.png";
 
 //PROJECT DATA
 const Projects = [
@@ -78,6 +79,21 @@ const Projects = [
             code: "#",
         },
         featured: false,
+    },
+    {
+        id: "p12",
+        title: "Pet Monitor",
+        subtitle: "Senior Design Project",
+        year: 2025,
+        tags: ["Spring Boot", "React", "Firebase","OpenAI API"],
+        category: "Web",
+        description:
+            "Developed a full-stack Pet Monitor Appplication using React for dynamic UI and Spring Boot + Firebase for backend services. " +
+            "Implemented REST API for real-time AI chatbot" +
+            "Used Firebase to manage user accounts, Pet, Pet-Sitter & Vet data. " ,
+        image:  pet,
+        links: { code: "https://github.com/brianq143/Pet-Monitor" },
+        featured: true,
     },
     {
         id: "p4",
