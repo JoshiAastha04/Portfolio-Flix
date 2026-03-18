@@ -48,7 +48,7 @@ const Projects = [
         id: "p13",
         title: "StanLore",
         subtitle: "Personal Project",
-        year: 2023,
+        year: 2026,
         tags: ["React + Vite", "Supabase", "Vercel"],
         category: "Web",
         description:
@@ -67,7 +67,7 @@ const Projects = [
         id: "p5",
         title: "Food Blog",
         subtitle: "Personal Project",
-        year: 2026,
+        year: 2023,
         tags: ["HTML", "Tailwind CSS", "AWS"],
         category: "Web",
         description:
