@@ -58,7 +58,7 @@ const Projects = [
             " Deployed on vercel at stanloree.live",
         image: stanloree,
         links: {
-            live: "www.stanloree.live",
+            live: "https://www.stanloree.live",
             code: "https://github.com/JoshiAastha04/StanLore",
         },
         featured: true,
