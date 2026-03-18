@@ -26,11 +26,11 @@ export default function Row({ title, items, onOpen }) {
                   shrink-0
                   snap-start
                   basis-[45%]
-                  sm:basis-[35%]
+                  sm:basis-[25%]
                   md:basis-[35%]
                   lg:basis-[32%]
-                  xl:basis-[25%]
-                  2xl:basis-[28%]
+                  xl:basis-[32%]
+                  2xl:basis-[20%]
                 "
                             >
                                 <ProjectCard

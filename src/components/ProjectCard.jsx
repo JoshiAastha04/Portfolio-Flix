@@ -42,7 +42,7 @@ function ProjectCard({ project, onOpen }) {
           </span>
                 )}
 
-                {/* Hover overlay – ONLY this card because the group is on this button */}
+                {/* Hover */}
                 <div
                     className="
             absolute inset-0

@@ -25,6 +25,7 @@ import isa from "../assets/isa.png";
 import ecom from "../assets/ecom.png";
 import subdub from "../assets/subdub.png";
 import pet from "../assets/pet.png";
+import stanloree from "../assets/stanloree.png";
 
 //PROJECT DATA
 const Projects = [
@@ -40,6 +41,25 @@ const Projects = [
         links: {
             live: "",
             code: "https://github.com/JoshiAastha04/",
+        },
+        featured: true,
+    },
+    {
+        id: "p13",
+        title: "StanLore",
+        subtitle: "Personal Project",
+        year: 2023,
+        tags: ["React + Vite", "Supabase", "Vercel"],
+        category: "Web",
+        description:
+            "StanLore is a full-stack photocard collection tracking platform built for K-pop fans. "+
+            "Users can manage their binder across eras and members, spend earned stars to collect cards from a rarity-tiered catalog, " +
+            "and engage with a real-time community through Lore Space- a thread board for theories, fashion analysis, and photocard discussions." +
+            " Deployed on vercel at stanloree.live",
+        image: stanloree,
+        links: {
+            live: "www.stanloree.live",
+            code: "https://github.com/JoshiAastha04/StanLore",
         },
         featured: true,
     },
