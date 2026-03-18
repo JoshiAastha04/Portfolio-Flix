@@ -200,8 +200,8 @@ export default function MyStory() {
                         Just curious?{" "}
                         <span className="text-[#4a9eff]">Hope you enjoyed the read.</span>
                         <br />
-                        Either way —{" "}
-                        <span className="text-white/60">hi, I'm Aastha. 👋</span>
+                        Either way {" "}
+                        <span className="text-white/60">Hiee, I'm Aastha. 👋</span>
                     </h2>
                 </FadeUp>
 
