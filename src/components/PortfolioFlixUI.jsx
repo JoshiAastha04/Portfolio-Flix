@@ -34,7 +34,7 @@ const Projects = [
         title: "Aastha Joshi",
         tags: ["Creative", "Communication", "Leadership"],
         category: "",
-        year: 2025,
+        year: 2026,
         description:
             "Built this portfolio Netflix-style...\nNow imagine what I'll build for your company ;)",
         image: myphoto2,
@@ -113,7 +113,7 @@ const Projects = [
             "Used Firebase to manage user accounts, Pet, Pet-Sitter & Vet data. " ,
         image:  pet,
         links: { code: "https://github.com/brianq143/Pet-Monitor" },
-        featured: true,
+        featured: false,
     },
     {
         id: "p4",
