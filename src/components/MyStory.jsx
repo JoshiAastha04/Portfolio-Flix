@@ -26,7 +26,7 @@ function FadeUp({ children, delay = 0, className = "" }) {
 /* ── vibe cards data ──────────────────────────────── */
 const vibes = [
     { emoji: "🎨", label: "Portrait sketching", sub: "faces, expressions, moods" },
-    { emoji: "🍳", label: "Cooking", sub: "survival → obsession" },
+    { emoji: "👩‍🍳", label: "Cooking", sub: "survival → obsession" },
     { emoji: "🏋️", label: "Gym 4×/week", sub: "non-negotiable" },
     { emoji: "📺", label: "K & C Dramas", sub: "Our Beloved Summer · First Frost" },
     { emoji: "🎵", label: "Music in 4 languages", sub: "Gujarati · Hindi · Korean · English" },
