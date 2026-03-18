@@ -25,9 +25,6 @@ function MobileMenu({ open, onToggleAbout }) {
                         <a className="block" href="#game">
                             Game Dev
                         </a>
-                        <a className="block" href="#extracurricular">
-                            Extracurricular
-                        </a>
                         <a className="block" href="#backend">
                             Backend
                         </a>

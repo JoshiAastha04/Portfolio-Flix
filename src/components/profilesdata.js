@@ -1,0 +1,38 @@
+export const profiles = [
+    {
+        id: "projects",
+        name: "Projects",
+        emoji: "💻",
+        color: "#e50914",
+        gradient: "from-red-900 to-red-600",
+        bgColor: "#1a0000",
+        description: "All my Builds",
+    },
+    {
+        id: "story",
+        name: "My Story",
+        emoji: "📖",
+        color: "#4a9eff",
+        gradient: "from-blue-900 to-blue-500",
+        bgColor: "#00091a",
+        description: "India → CSUN → 🌎",
+    },
+    {
+        id: "inprogress",
+        name: "In Progress",
+        emoji: "🚀",
+        color: "#00c896",
+        gradient: "from-emerald-900 to-emerald-500",
+        bgColor: "#001a11",
+        description: "What I'm building",
+    },
+    {
+        id: "hireme",
+        name: "Hire Me",
+        emoji: "✨",
+        color: "#c084fc",
+        gradient: "from-purple-900 to-purple-500",
+        bgColor: "#0d001a",
+        description: "Let's work together",
+    },
+];
