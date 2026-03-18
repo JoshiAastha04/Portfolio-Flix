@@ -260,7 +260,7 @@ export default function HireMe() {
                         Ready to talk?
                     </h2>
                     <p className="mx-auto mt-4 max-w-md text-sm text-white/50">
-                        Whether it's a full-time role, internship, or a cool project —
+                        Whether it's a full-time role, internship, or a cool project,
                         I'm always happy to chat.
                     </p>
                     <a
