@@ -19,13 +19,13 @@ export default function SharedHeader({ activeProfile, onSwitchProfile, onGoProfi
 
     return (
         <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-[#0b0b0b] to-transparent px-4 py-3 shadow-lg shadow-black/20">
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-between">
+            <div className="flex w-full items-center justify-between px-4 md:px-10">
                 {/* Logo */}
                 <button
                     onClick={onGoProfiles}
                     className="text-lg font-black tracking-tight text-white hover:opacity-80 transition-opacity"
                 >
-                    <span className="text-red-600">Aastha Joshi</span>
+                    <span className="text-red-600">Aastha</span>
                     <span className="text-white/30 text-sm font-light ml-1">portfolio</span>
                 </button>
 
