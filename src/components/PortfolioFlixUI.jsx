@@ -20,8 +20,8 @@ import leveleditor from "../assets/elev8.png";
 import adhdapp from "../assets/fkfa.png";
 import studyplatform from "../assets/dct.png";
 import keycard from "../assets/keycard.png";
-import acm from "../assets/ACM.png";
-import isa from "../assets/isa.png";
+//import acm from "../assets/ACM.png";
+//import isa from "../assets/isa.png";
 import ecom from "../assets/ecom.png";
 import subdub from "../assets/subdub.png";
 import pet from "../assets/pet.png";
@@ -188,32 +188,6 @@ const Projects = [
         featured: false,
     },
     {
-        id: "p9",
-        title: "ACM",
-        subtitle: "Vice President",
-        year: 2023,
-        tags: ["Teamwork", "Willing to Adapt", "Problem Solving"],
-        category: "extracurricular",
-        description: "Organised events like LeetCode workshops to help students grow in problem solving.",
-        image: acm,
-        links: { live: "#" },
-        featured: false,
-    },
-    {
-        id: "p10",
-        title: "ISA",
-        subtitle: "Secretary",
-        year: 2024,
-        tags: ["Leadership", "Collaboration", "Accountability"],
-        category: "extracurricular",
-        description:
-            "Organised events to promote Indian culture and build a community. " +
-            "Cultural events helped students feel at home away from home.",
-        image: isa,
-        links: { live: "#" },
-        featured: false,
-    },
-    {
         id: "p11",
         title: "Subscription Tracker",
         subtitle: "Personal Project",
@@ -234,12 +208,17 @@ const Projects = [
 /* ================================
    MAIN PAGE
 ================================== */
-export default function PortfolioNetflixUI() {
+export default function PortfolioNetflixUI({ initialProfile, onSwitchProfile: onSwitchProfileProp, onGoProfiles }) {
     const [query, setQuery] = useState("");
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeProject, setActiveProject] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [aboutOpen, setAboutOpen] = useState(false);
+    const [activeProfile, setActiveProfile] = useState(initialProfile || { id: "projects", name: "Projects", emoji: "💻", color: "#e50914" });
+    const handleSwitchProfile = (profile) => {
+        setActiveProfile(profile);
+        if (onSwitchProfileProp) onSwitchProfileProp(profile);
+    };
 
     // pick the newest featured project
     const featuredProject = useMemo(() => {
@@ -272,9 +251,6 @@ export default function PortfolioNetflixUI() {
         const mobile = list.filter((p) => p.category === "Mobile");
         const game = list.filter((p) => p.category === "Game");
         const backend = list.filter((p) => p.category === "backend");
-        const extracurricular = list.filter(
-            (p) => p.category === "extracurricular"
-        );
 
         return [
             { id: "featured", title: "Featured Projects", items: featured },
@@ -282,7 +258,6 @@ export default function PortfolioNetflixUI() {
             { id: "mobile", title: "Mobile", items: mobile },
             { id: "game", title: "Game Development", items: game },
             { id: "backend", title: "Backend Development", items: backend },
-            { id: "extracurricular", title: "Extracurricular", items: extracurricular },
             { id: "all", title: "All Projects", items: uniqueAll },
         ];
     }, [filtered]);
@@ -306,6 +281,9 @@ export default function PortfolioNetflixUI() {
                     onToggleAbout={() => setAboutOpen(true)}
                     query={query}
                     setQuery={setQuery}
+                    activeProfile={activeProfile}
+                    onSwitchProfile={handleSwitchProfile}
+                    onGoProfiles={onGoProfiles}
                 />
 
                 <MobileMenu
