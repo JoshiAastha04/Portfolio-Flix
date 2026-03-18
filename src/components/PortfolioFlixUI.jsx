@@ -67,7 +67,7 @@ const Projects = [
         id: "p5",
         title: "Food Blog",
         subtitle: "Personal Project",
-        year: 2023,
+        year: 2026,
         tags: ["HTML", "Tailwind CSS", "AWS"],
         category: "Web",
         description:
